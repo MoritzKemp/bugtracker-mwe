@@ -1,0 +1,33 @@
+{
+    "bugs": [
+        {
+            "context"       : "my specific url",
+            "subscriber"    : "Moritz",
+            "description"   : "my bug description",
+            "name"          : "Bug No. 1",
+            "tags"          : [
+                {
+                    "tagname"   : "test"
+                },
+                {
+                    "tagname"   : "stupid"
+                }
+            ],
+            "state"         : "pending"
+        },
+        {
+            "context"       : "my specific url 2",
+            "description"   : "my bug description 2, somewhat a little bit longer. I suppose that most descriptions are longer than a few lines.",
+            "subscriber"    : "Fred",
+            "name"          : "Bug No. 2",
+            "tags"          : [
+                {
+                    "tagname"   : "test"
+                },
+                {
+                    "tagname"   : "stupid"
+                }
+            ],
+            "state"         : "pending"
+        }
+]}

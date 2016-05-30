@@ -1,0 +1,73 @@
+{
+    "main" : {
+        "tag" : "div",
+        "class" : "bugs-overview"
+        
+    },
+    
+    "bug" : {
+        "tag" : "div",
+        "class" : "bug",
+        "inner" : [
+            {
+                "tag" : "div",
+                "class": "name",
+                "inner" : "%name%"
+            },
+            {
+                "tag" : "div",
+                "class": "status",
+                "inner" : [
+                    {
+                        "tag"   : "div",
+                        "class" : "status-title",
+                        "inner" : "Status:"
+                    },
+                    {
+                        "tag"   : "div",
+                        "class" : "current-status",
+                        "inner" : "%status%"
+                    }
+                ]
+            },
+            {
+                "tag" : "div",
+                "class": "tags",
+                "inner" : [
+                    {
+                        "tag"   : "div",
+                        "class" : "tag-title",
+                        "inner" : "Tags:" 
+                    }
+                ]
+            },
+            {
+                "tag" : "div",
+                "class": "subscriber",
+                "inner" : "%subscriber%"
+            },
+            {
+                "tag" : "div",
+                "class": "description",
+                "inner" : [
+                    {
+                        "tag"   : "div",
+                        "class" : "description-title",
+                        "inner" : "Description:"
+                    },
+                    {
+                        "tag"   : "div",
+                        "class" : "description-text",
+                        "inner" : "%description%"
+                    }
+                ]
+            }
+        ]
+    },
+    
+    "bugTag" : {
+        "tag" : "div",
+        "class" : "bug-tag",
+        "inner" : "#%tagName%"
+    }
+}

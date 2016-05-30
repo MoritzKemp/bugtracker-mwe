@@ -1,0 +1,84 @@
+
+.ccm-bugtracker-mwe .bugs-overview {
+    float: left;
+    clear: right;
+    background-color: #e3e3e3;
+}
+
+.ccm-bugtracker-mwe .bug{
+    float: left;
+    clear: left;
+    margin: 1em;
+}
+
+.ccm-bugtracker-mwe .name {
+    font-weight: bold;
+}
+
+.ccm-bugtracker-mwe .status{
+    float: left;
+}
+
+.ccm-bugtracker-mwe .status-title{
+    margin: 0 2em 1em 0;
+    float: left;
+}
+
+.ccm-bugtracker-mwe .current-status {
+    float: left;
+    border-color: #000;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 4px;
+    padding: 0.2em;
+}
+
+.ccm-bugtracker-mwe .tags{
+    float: left;
+    clear: left;
+}
+
+.ccm-bugtracker-mwe .tag-title {
+    float: left;
+}
+
+.ccm-bugtracker-mwe .bug-tag {
+    border-color: #000;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 4px;
+    float: left;
+    margin-right: 1em;
+    padding: 0.2em;
+}
+
+.ccm-bugtracker-mwe .tag-title {
+    margin-right: 2em;
+}
+
+.ccm-bugtracker-mwe .description{
+    max-width: 25em;
+    float: left;
+    clear: left;
+}
+
+.ccm-bugtracker-mwe .description-title{
+    float: left;
+    clear: left;
+}
+
+.ccm-bugtracker-mwe .description-text{
+    border-color: #1b6d85;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0px;
+    width: 100%;
+    float: left;
+    clear: left;
+    padding: 0.2em;
+}
+
+.ccm-bugtracker-mwe .subscriber {
+    float: left;
+    clear: left;
+}
