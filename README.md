@@ -1,2 +1,4 @@
 # bugtracker-mwe
-Bugtracker component for the lecture "Master Web Engineering" by Prof. Kaul at H-BRS.
+Bugtracker component for the lecture "Master Web Engineering" by Prof. Kaul at H-BRS
+
+Hallo Kommentar
