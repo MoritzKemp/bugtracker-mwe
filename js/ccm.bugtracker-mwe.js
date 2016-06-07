@@ -22,7 +22,20 @@ ccm.component({
                 element.html(ccm.helper.html(self.html.get('main')));
                 var overview = ccm.helper.find(self, '.bugs-overview');
                 
-                //Render bugs
+                // Attach header
+                var header = $(ccm.helper.html(
+                    self.html.get('header'),
+                    {
+                        bugIdTitle: "ID",
+                        nameTitle: "Name",
+                        statusTitle: "Status",
+                        subscriberTitle: "Subscriber",
+                        descriptionTitle: "Describtion"
+                    }
+                ));
+                header.appendTo(overview);
+                
+                //Render all bugs
                 var i=0;
                 while(dataset[i]){
 
@@ -30,29 +43,14 @@ ccm.component({
                     var newBug = $(ccm.helper.html(
                         self.html.get('bug'), 
                         {
-                            subscriber : dataset[i].subscriber,
-                            description: dataset[i].description,
-                            status: dataset[i].state,
-                            name: dataset[i].name,
+                            bugId       : dataset[i].bugId,
+                            subscriber  : dataset[i].subscriber,
+                            description : dataset[i].description,
+                            status      : dataset[i].state,
+                            name        : dataset[i].name,
                         }
                     ));
 
-                    tagDiv = newBug.find(".tags");
-
-                    // Get stored tags
-                    var tags = dataset[i].tags;
-                    var j=0;
-                    while(tags[j]){
-
-                        var newTag = $( ccm.helper.html(
-                            self.html.get('bugTag'),
-                            {
-                                tagName: tags[j].tagname
-                            }
-                        ));
-                        newTag.appendTo(tagDiv);
-                        j++;
-                    }
                     // Append it to overview
                     newBug.appendTo(overview);
                     i++;
