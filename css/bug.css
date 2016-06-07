@@ -1,40 +1,48 @@
 
 .ccm-bugtracker-mwe .bugs-overview {
+    min-width: 600px;
     float: left;
     clear: right;
+    display: table;
     background-color: white;
     border: 2px solid black;
     padding: 0.5em;
 }
 
-.ccm-bugtracker-mwe .bug{
-    float: left;
-    clear: left;
+.ccm-bugtracker-mwe .bug,
+.ccm-bugtracker-mwe .header{
+    display: table-row;
+    width: 100%;
 }
-
 
 .ccm-bugtracker-mwe .bug > *, 
 .ccm-bugtracker-mwe .header > *{
-    float: left;
-    padding: 0.1em 1em 0.1em 1em;
+    display: table-cell;
+    padding: 0.2em 1em 0.2em 1em;
 }
 
-.ccm-bugtracker-mwe .bug:nth-child(even)
-{
+.ccm-bugtracker-mwe .header{
+    text-align: center;
+    text-decoration: underline;
+}
+
+.ccm-bugtracker-mwe .bug:nth-child(even){
     background-color: #d5fcfe;
 }
 
 .ccm-bugtracker-mwe .bug-id{
-    min-width: 2em;
+    width: 3em;
     border-right: 1px solid grey;
 }
 
 .ccm-bugtracker-mwe .name {
+    width: 15%;
     font-weight: bold;
     border-right: 1px solid grey;
 }
 
 .ccm-bugtracker-mwe .current-status {
+    width: 3em;
     border-right: 1px solid grey;
 }
 
@@ -44,6 +52,5 @@
 }
 
 .ccm-bugtracker-mwe .description{
-    clear: right;
 }
 
