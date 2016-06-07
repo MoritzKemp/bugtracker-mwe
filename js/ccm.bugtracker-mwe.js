@@ -33,7 +33,7 @@ ccm.component({
                             subscriber : dataset[i].subscriber,
                             description: dataset[i].description,
                             status: dataset[i].state,
-                            name: dataset[i].name,
+                            name: dataset[i].name
                         }
                     ));
                     
@@ -62,7 +62,7 @@ ccm.component({
                 
             });
             if(callback) callback();
-        }
+        };
         self.addBug = function(){
         }
     }
