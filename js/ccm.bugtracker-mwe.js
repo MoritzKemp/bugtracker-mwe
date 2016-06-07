@@ -15,17 +15,17 @@ ccm.component({
         self.render = function(callback){
             var element = ccm.helper.element(self);
             
-            // Rendern der Grundstrutkur
-            element.html(ccm.helper.html(self.html.get('main')));
-            var overview = ccm.helper.find(self, '.bugs-overview');
-                       
-            // Get bugs from store
-            self.store.get('bugs', function (dataset){
+            //Function which builds the overview and attaches bugs
+            buildOverview = function(dataset){
+                
+                // Rendern der Grundstrutkur
+                element.html(ccm.helper.html(self.html.get('main')));
+                var overview = ccm.helper.find(self, '.bugs-overview');
                 
                 //Render bugs
                 var i=0;
                 while(dataset[i]){
-                    
+
                     // Create html and wrap in to a jQery object
                     var newBug = $(ccm.helper.html(
                         self.html.get('bug'), 
@@ -36,14 +36,14 @@ ccm.component({
                             name: dataset[i].name,
                         }
                     ));
-                    
+
                     tagDiv = newBug.find(".tags");
-                    
+
                     // Get stored tags
                     var tags = dataset[i].tags;
                     var j=0;
                     while(tags[j]){
-                        
+
                         var newTag = $( ccm.helper.html(
                             self.html.get('bugTag'),
                             {
@@ -53,17 +53,16 @@ ccm.component({
                         newTag.appendTo(tagDiv);
                         j++;
                     }
-                    
                     // Append it to overview
                     newBug.appendTo(overview);
-                    
                     i++;
                 }
-                
-            });
+            }
+            
+            // Call build functions to actually build the view
+            self.store.get('bugs', buildOverview);
+            
             if(callback) callback();
-        }
-        self.addBug = function(){
         }
     }
 });
