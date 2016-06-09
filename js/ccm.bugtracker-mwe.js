@@ -15,8 +15,8 @@ ccm.component({
         self.render = function(callback){
             var element = ccm.helper.element(self);
             
-            //Function which builds the overview and attaches bugs
-            buildOverview = function(dataset){
+            //Private function which builds the overview and attaches bugs
+            var buildOverview = function(dataset){
                 
                 // Rendern der Grundstrutkur
                 element.html(ccm.helper.html(self.html.get('main')));
@@ -57,8 +57,36 @@ ccm.component({
                 }
             }
             
+            //Private function to sort bugs after their status
+            var sortStatus = function(order){
+                //Get overview container
+                var overview = $('.bugs-overview');
+                
+                //Get all bugs and remove them
+                var bugs = overview.find('.bug');
+                bugs.remove();
+                
+                if(order === 0)
+                {
+                    order = ['open', 'pending', 'closed'];
+                } else {
+                    order = ['closed', 'pending', 'open'];
+                }
+                
+                order.forEach(function(key){
+                    bugs.each(function(){
+                        if($(this).find('.current-status').html() === key)
+                        {
+                            $(this).appendTo(overview);
+                        }     
+                    });
+                });
+            }
+            
             // Call build functions to actually build the view
             self.store.get('bugs', buildOverview);
+            
+            sortStatus(0);
             
             if(callback) callback();
         }
