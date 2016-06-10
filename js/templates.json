@@ -19,12 +19,12 @@
             },
             {
                 "tag"   : "div",
-                "class" : "current-status-header",
+                "class" : "current-status-header no-order",
                 "inner" : "%statusTitle%"
             },
             {
-                "tag" : "div",
-                "class": "subscriber-header",
+                "tag"   : "div",
+                "class" : "subscriber-header",
                 "inner" : "%subscriberTitle%"
             },
             {

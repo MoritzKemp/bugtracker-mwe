@@ -67,7 +67,7 @@ ccm.component({
                 bugs.remove();
                 
                 if(order === 0)
-                {
+                {   
                     order = ['open', 'pending', 'closed'];
                 } else {
                     order = ['closed', 'pending', 'open'];
@@ -86,7 +86,31 @@ ccm.component({
             // Call build functions to actually build the view
             self.store.get('bugs', buildOverview);
             
-            sortStatus(0);
+            //Private onclick function for status header
+            $('.current-status-header').click(function(){
+                if ($(this).hasClass('no-order'))
+                {
+                    $(this).removeClass('no-order');
+                    $(this).addClass('asc');
+                    sortStatus(0);
+                    return;
+                }
+                if ($(this).hasClass('asc'))
+                {
+                    $(this).removeClass('asc');
+                    $(this).addClass('desc');
+                    sortStatus(1);
+                    return;
+                }
+                if ($(this).hasClass('desc'))
+                {
+                    $(this).removeClass('desc');
+                    $(this).addClass('asc');
+                    sortStatus(0);
+                    return;
+                }
+            });
+            
             
             if(callback) callback();
         }

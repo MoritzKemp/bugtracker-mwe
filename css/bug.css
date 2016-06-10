@@ -22,6 +22,11 @@
     padding: 0.2em 1em 0.2em 1em;
 }
 
+.ccm-bugtracker-mwe .current-status-header:hover{
+    color: #7b7b7b;
+    cursor: pointer;
+}
+
 .ccm-bugtracker-mwe .header{
     text-align: center;
     text-decoration: underline;
