@@ -82,3 +82,9 @@
     float: left;
     clear: left;
 }
+
+textarea, label, button{
+    width: 280px;
+    padding: 0.25em;
+    margin-bottom: 10px;
+}
