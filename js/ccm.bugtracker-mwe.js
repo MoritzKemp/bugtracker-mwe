@@ -5,35 +5,49 @@
 ccm.component({
     name: 'bugtracker-mwe',
     config: {
-        html: [ccm.store, {local: 'js/templates.json'}],
-        store: [ccm.store, {local: 'js/bugs.json'}],
-        style: [ccm.load, 'css/bug.css']
+        html    : [ccm.store, {local: 'js/templates.json'}],
+        store   : [ccm.store, {local: 'js/bugs.json'}],
+        style   : [ccm.load, 'css/bug.css']
     },
-    Instance: function () {
-
+    Instance: function(){
+        
         var self = this;
-        self.render = function (callback) {
+        self.render = function(callback){
             var element = ccm.helper.element(self);
-
-            //Function which builds the overview and attaches bugs
-            buildOverview = function (dataset) {
-
+            
+            //Private function which builds the overview and attaches bugs
+            var buildOverview = function(dataset){
+                
                 // Rendern der Grundstrutkur
                 element.html(ccm.helper.html(self.html.get('main')));
                 var overview = ccm.helper.find(self, '.bugs-overview');
-
-                //Render bugs
-                var i = 0;
-                while (dataset[i]) {
+                
+                // Attach header
+                var header = $(ccm.helper.html(
+                    self.html.get('header'),
+                    {
+                        bugIdTitle: "ID",
+                        nameTitle: "Name",
+                        statusTitle: "Status",
+                        subscriberTitle: "Subscriber",
+                        descriptionTitle: "Describtion"
+                    }
+                ));
+                header.appendTo(overview);
+                
+                //Render all bugs
+                var i=0;
+                while(dataset[i]){
 
                     // Create html and wrap in to a jQery object
                     var newBug = $(ccm.helper.html(
-                        self.html.get('bug'),
+                        self.html.get('bug'), 
                         {
-                            subscriber: dataset[i].subscriber,
-                            description: dataset[i].description,
-                            status: dataset[i].state,
-                            name: dataset[i].name
+                            bugId       : dataset[i].bugId,
+                            subscriber  : dataset[i].subscriber,
+                            description : dataset[i].description,
+                            status      : dataset[i].state,
+                            name        : dataset[i].name,
                         }
                     ));
 
@@ -41,10 +55,10 @@ ccm.component({
 
                     // Get stored tags
                     var tags = dataset[i].tags;
-                    var j = 0;
-                    while (tags[j]) {
+                    var j=0;
+                    while(tags[j]){
 
-                        var newTag = $(ccm.helper.html(
+                        var newTag = $( ccm.helper.html(
                             self.html.get('bugTag'),
                             {
                                 tagName: tags[j].tagname
@@ -57,6 +71,34 @@ ccm.component({
                     newBug.appendTo(overview);
                     i++;
                 }
+            }
+            
+            //Private function to sort bugs after their status
+            var sortStatus = function(order){
+                //Get overview container
+                var overview = $('.bugs-overview');
+                
+                //Get all bugs and remove them
+                var bugs = overview.find('.bug');
+                bugs.remove();
+                
+                if(order === 0)
+                {   
+                    order = ['open', 'pending', 'closed'];
+                } else {
+                    order = ['closed', 'pending', 'open'];
+                }
+                
+                order.forEach(function(key){
+                    bugs.each(function(){
+                        if($(this).find('.current-status').html() === key)
+                        {
+                            $(this).appendTo(overview);
+                        }     
+                    });
+                });
+            }
+            
                 //var bugs_overview_div = e
                 newBug.append("<br><button class='new_bug'>Neuer Bug</button>");
                 newBug.find('.new_bug').click(function () {
@@ -88,8 +130,8 @@ ccm.component({
 
             // Call build functions to actually build the view
             self.store.get('bugs', buildOverview);
-
-            if (callback) callback();
+            
+            if(callback) callback();
         }
     }
 });

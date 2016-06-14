@@ -2,7 +2,37 @@
     "main" : {
         "tag" : "div",
         "class" : "bugs-overview"
-        
+    },
+    "header"  : {
+        "tag"   : "div",
+        "class" : "header",
+        "inner" : [
+            {
+                "tag"   : "div",
+                "class" : "bug-id-header",
+                "inner" : "%bugIdTitle%"
+            },
+            {
+                "tag" : "div",
+                "class": "name-header",
+                "inner" : "%nameTitle%"
+            },
+            {
+                "tag"   : "div",
+                "class" : "current-status-header no-order",
+                "inner" : "%statusTitle%"
+            },
+            {
+                "tag"   : "div",
+                "class" : "subscriber-header",
+                "inner" : "%subscriberTitle%"
+            },
+            {
+                "tag" : "div",
+                "class": "description-header",
+                "inner" : "%descriptionTitle%"
+            }
+        ]
     },
     
     "bug" : {
@@ -10,36 +40,19 @@
         "class" : "bug",
         "inner" : [
             {
+                "tag"   : "div",
+                "class" : "bug-id",
+                "inner" : "%bugId%"
+            },
+            {
                 "tag" : "div",
                 "class": "name",
                 "inner" : "%name%"
             },
             {
-                "tag" : "div",
-                "class": "status",
-                "inner" : [
-                    {
-                        "tag"   : "div",
-                        "class" : "status-title",
-                        "inner" : "Status:"
-                    },
-                    {
-                        "tag"   : "div",
-                        "class" : "current-status",
-                        "inner" : "%status%"
-                    }
-                ]
-            },
-            {
-                "tag" : "div",
-                "class": "tags",
-                "inner" : [
-                    {
-                        "tag"   : "div",
-                        "class" : "tag-title",
-                        "inner" : "Tags:" 
-                    }
-                ]
+                "tag"   : "div",
+                "class" : "current-status",
+                "inner" : "%status%"
             },
             {
                 "tag" : "div",
@@ -49,25 +62,8 @@
             {
                 "tag" : "div",
                 "class": "description",
-                "inner" : [
-                    {
-                        "tag"   : "div",
-                        "class" : "description-title",
-                        "inner" : "Description:"
-                    },
-                    {
-                        "tag"   : "div",
-                        "class" : "description-text",
-                        "inner" : "%description%"
-                    }
-                ]
+                "inner" : "%description%"
             }
         ]
-    },
-    
-    "bugTag" : {
-        "tag" : "div",
-        "class" : "bug-tag",
-        "inner" : "#%tagName%"
     }
 }

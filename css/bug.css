@@ -1,90 +1,62 @@
 
 .ccm-bugtracker-mwe .bugs-overview {
+    min-width: 600px;
     float: left;
     clear: right;
-    background-color: #e3e3e3;
+    display: table;
+    background-color: white;
+    border: 2px solid #36f0fe;
+    padding: 0.5em;
 }
 
-.ccm-bugtracker-mwe .bug{
-    float: left;
-    clear: left;
-    margin: 1em;
+.ccm-bugtracker-mwe .bug,
+.ccm-bugtracker-mwe .header{
+    display: table-row;
+    width: 100%;
+}
+
+.ccm-bugtracker-mwe .bug > *,
+.ccm-bugtracker-mwe .header > *{
+    font-family: sans-serif;
+    display: table-cell;
+    padding: 0.2em 1em 0.2em 1em;
+}
+
+.ccm-bugtracker-mwe .current-status-header:hover{
+    color: #7b7b7b;
+    cursor: pointer;
+}
+
+.ccm-bugtracker-mwe .header{
+    text-align: center;
+    text-decoration: underline;
+}
+
+.ccm-bugtracker-mwe .bug:nth-child(even){
+    background-color: #d5fcfe;
+}
+
+.ccm-bugtracker-mwe .bug-id{
+    width: 2em;
+    border-right: 1px solid grey;
 }
 
 .ccm-bugtracker-mwe .name {
+    width: 15%;
     font-weight: bold;
-}
-
-.ccm-bugtracker-mwe .status{
-    float: left;
-}
-
-.ccm-bugtracker-mwe .status-title{
-    margin: 0 2em 1em 0;
-    float: left;
+    border-right: 1px solid grey;
 }
 
 .ccm-bugtracker-mwe .current-status {
-    float: left;
-    border-color: #000;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 4px;
-    padding: 0.2em;
+    width: 3em;
+    border-right: 1px solid grey;
 }
 
-.ccm-bugtracker-mwe .tags{
-    float: left;
-    clear: left;
-}
 
-.ccm-bugtracker-mwe .tag-title {
-    float: left;
-}
-
-.ccm-bugtracker-mwe .bug-tag {
-    border-color: #000;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 4px;
-    float: left;
-    margin-right: 1em;
-    padding: 0.2em;
-}
-
-.ccm-bugtracker-mwe .tag-title {
-    margin-right: 2em;
+.ccm-bugtracker-mwe .subscriber {
+    border-right: 1px solid grey;
 }
 
 .ccm-bugtracker-mwe .description{
-    max-width: 25em;
-    float: left;
-    clear: left;
 }
 
-.ccm-bugtracker-mwe .description-title{
-    float: left;
-    clear: left;
-}
-
-.ccm-bugtracker-mwe .description-text{
-    border-color: #1b6d85;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 0px;
-    width: 100%;
-    float: left;
-    clear: left;
-    padding: 0.2em;
-}
-
-.ccm-bugtracker-mwe .subscriber {
-    float: left;
-    clear: left;
-}
-
-textarea, label, button{
-    width: 280px;
-    padding: 0.25em;
-    margin-bottom: 10px;
-}
