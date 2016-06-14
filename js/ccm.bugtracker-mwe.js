@@ -5,9 +5,11 @@
 ccm.component({
     name: 'bugtracker-mwe',
     config: {
-        html    : [ccm.store, {local: 'js/templates.json'}],
-        store   : [ccm.store, {local: 'js/bugs.json'}],
-        style   : [ccm.load, 'css/bug.css']
+        html        : [ccm.store, {local: 'js/templates.json'}],
+        store       : [ccm.store, {local: 'js/bugs.json'}],
+        remoteStore : [ccm.store, {store: 'bugtracker', url: 'http://ccm2.inf.h-brs.de/index.js' }],
+        key         : 'bugtracker',
+        style       : [ccm.load, 'css/bug.css']
     },
     Instance: function(){
         
@@ -111,6 +113,15 @@ ccm.component({
                 }
             });
             
+            self.store.get(function(result){
+               self.remoteStore.set(result, function(response){
+                   console.log(response);
+               }); 
+            });
+
+            self.remoteStore.get(self.key, function(result){
+                console.log(result);
+            });
             
             if(callback) callback();
         }

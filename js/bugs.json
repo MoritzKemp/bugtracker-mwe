@@ -1,4 +1,5 @@
 {
+    "key" : "bugtracker",
     "bugs": [
         {
             "bugId"         : "33de",
