@@ -49,15 +49,42 @@ ccm.component({
                             subscriber  : dataset[i].subscriber,
                             description : dataset[i].description,
                             status      : dataset[i].state,
-                            name        : dataset[i].name,
+                            name        : dataset[i].name
                         }
                     ));
-
                     // Append it to overview
                     newBug.appendTo(overview);
                     i++;
+
+                    //var bugs_overview_div = e
+
+
+
                 }
-            }
+                newBug.append("<br><button class='new_bug'>Neuer Bug</button>");
+                newBug.find('.new_bug').click(function () {
+                    overview.html("<h2>Add a new bug ...</h2>" + "<form>" +
+                        "<label for='bug_subject'>Subject</label>"
+                        + "<textarea id='subject' name='ta_subject' cols='20' rows='5' required></textarea>"
+                        + "<br>"
+                        + "<label for='bug_status'>Status</label>"
+                        + " <select name='Status'>"
+                        + "<option value='neu'>Neu</option>"
+                        + "<option value='in_bearb'>in Bearbeitung</option>"
+                        + "<option value='umgesetzt'>Umgesetzt</option>"
+                        + "</select>"
+                        + "<br>"
+                        + "<label for='bug_prio'>Priorität</label>"
+                        + " <select name='Priorität'>"
+                        + "<option value='niedrig'>niedrig</option>"
+                        + "<option value='mittel'>mittel</option>"
+                        + "<option value='hoch'>hoch</option>"
+                        + "</select>"
+                        + "<br>"
+                        + "<button class='return_to_overview'>Bug-Überblick</button>"
+                        + "</form>");
+                });
+            };
             
             //Private function to sort bugs after their status
             var sortStatus = function(order){
@@ -83,12 +110,10 @@ ccm.component({
                         }     
                     });
                 });
-            }
-            
-            // Call build functions to actually build the view
+            };
+
+                //overview.html('.return_to_overwiew').click(self.render(buildOverview()));
             self.store.get('bugs', buildOverview);
-            
-            //Private onclick function for status header
             $('.current-status-header').click(function(){
                 if ($(this).hasClass('no-order'))
                 {
@@ -109,7 +134,6 @@ ccm.component({
                     $(this).removeClass('desc');
                     $(this).addClass('asc');
                     sortStatus(0);
-                    return;
                 }
             });
             
@@ -124,6 +148,12 @@ ccm.component({
             });
             
             if(callback) callback();
+            };
+
+
+            // Call build functions to actually build the view
+
+
+
         }
-    }
 });

@@ -15,7 +15,7 @@
     width: 100%;
 }
 
-.ccm-bugtracker-mwe .bug > *, 
+.ccm-bugtracker-mwe .bug > *,
 .ccm-bugtracker-mwe .header > *{
     font-family: sans-serif;
     display: table-cell;
