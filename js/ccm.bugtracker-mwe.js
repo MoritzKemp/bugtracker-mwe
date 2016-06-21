@@ -11,10 +11,13 @@ ccm.component({
         key         : 'bugtracker',
         style       : [ccm.load, 'css/bug.css']
     },
+    
     Instance: function(){
         
         var self = this;
+        
         self.render = function(callback){
+            
             var element = ccm.helper.element(self);
             
             //Private function which builds the overview and attaches bugs
@@ -55,12 +58,9 @@ ccm.component({
                     // Append it to overview
                     newBug.appendTo(overview);
                     i++;
-
-                    //var bugs_overview_div = e
-
-
-
                 }
+                
+                // Append button to overview
                 newBug.append("<br><button class='new_bug'>Neuer Bug</button>");
                 newBug.find('.new_bug').click(function () {
                     overview.html("<h2>Add a new bug ...</h2>" + "<form>" +
@@ -86,35 +86,7 @@ ccm.component({
                 });
             };
             
-            //Private function to sort bugs after their status
-            var sortStatus = function(order){
-                //Get overview container
-                var overview = $('.bugs-overview');
-                
-                //Get all bugs and remove them
-                var bugs = overview.find('.bug');
-                bugs.remove();
-                
-                if(order === 0)
-                {   
-                    order = ['open', 'pending', 'closed'];
-                } else {
-                    order = ['closed', 'pending', 'open'];
-                }
-                
-                order.forEach(function(key){
-                    bugs.each(function(){
-                        if($(this).find('.current-status').html() === key)
-                        {
-                            $(this).appendTo(overview);
-                        }     
-                    });
-                });
-            };
-
-                //overview.html('.return_to_overwiew').click(self.render(buildOverview()));
-            self.store.get('bugs', buildOverview);
-            $('.current-status-header').click(function(){
+            var onClickStatusHeader = function(){
                 if ($(this).hasClass('no-order'))
                 {
                     $(this).removeClass('no-order');
@@ -135,25 +107,73 @@ ccm.component({
                     $(this).addClass('asc');
                     sortStatus(0);
                 }
+            };
+            
+            var onClickAddBug = function(){
+                console.log('Add new Bug!')
+                // Ein Beispiel:
+                var newBug = {};
+//                newBug.bugId = "te3";
+//                newBug.context = "testcontext";
+//                newBug.subsriber = "hans";
+//                newBug.name = "Database broken!";
+//                newBug.state = "open";
+//                newBug.description = "test description ";
+//                self.storeBug(newBug);
+            };
+            
+            // Fetch data from DB and build overview
+            self.remoteStore.get(function(response){
+                buildOverview(response);   
+                //Add status header action
+                $('.current-status-header').click(onClickStatusHeader);
+                //Add new bug submit action
+                // Not the correct button, just checking if it works
+                $('.new_bug').click(onClickAddBug);
             });
             
-            self.store.get(function(result){
-               self.remoteStore.set(result, function(response){
-                   console.log(response);
-               }); 
-            });
-
-            self.remoteStore.get(self.key, function(result){
-                console.log(result);
-            });
+            
+            
             
             if(callback) callback();
-            };
+        };
+        
+        //Public function to save bugs into remote database
+        self.storeBug = function(bug){
+            
+            self.remoteStore.set({
+                "bugId"         : bug.bugId,
+                "context"       : bug.context,
+                "subscriber"    : bug.subscriber,
+                "description"   : bug.description,
+                "name"          : bug.name,
+                "state"         : bug.state
+            });
+        };
+        
+        //Private function to sort bugs after their status
+        var sortStatus = function(order){
+            //Get overview container
+            var overview = $('.bugs-overview');
+            //Get all bugs and remove them
+            var bugs = overview.find('.bug');
+            bugs.remove();
 
+            if(order === 0)
+            {   
+                order = ['open', 'pending', 'closed'];
+            } else {
+                order = ['closed', 'pending', 'open'];
+            }
 
-            // Call build functions to actually build the view
-
-
-
-        }
+            order.forEach(function(key){
+                bugs.each(function(){
+                    if($(this).find('.current-status').html() === key)
+                    {
+                        $(this).appendTo(overview);
+                    }     
+                });
+            });
+        };
+    }
 });
