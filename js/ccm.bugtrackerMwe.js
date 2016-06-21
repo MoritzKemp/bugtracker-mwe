@@ -5,10 +5,10 @@
 ccm.component({
     name: 'bugtrackerMwe',
     config: {
-        html        : [ccm.store, {local: './js/templates.json'}],
+        html        : [ccm.store, {local: './templates.json'}],
         remoteStore : [ccm.store, {store: 'bugtracker', url: 'http://ccm2.inf.h-brs.de/index.js' }],
         key         : 'bugtracker',
-        style       : [ccm.load, './css/bug.css']
+        style       : [ccm.load, '../css/bug.css']
     },
     
     Instance: function(){
