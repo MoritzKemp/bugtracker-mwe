@@ -1,7 +1,6 @@
-.ccm-bugtracker-mwe .bugs-overview{min-width:600px;float:left;clear:right;display:table;background-color:white;border:2px solid #36f0fe;padding:.5em}
-.ccm-bugtracker-mwe .bug,.ccm-bugtracker-mwe .header{display:table-row;width:100%}
-.ccm-bugtracker-mwe .bug>*,.ccm-bugtracker-mwe .header>*{font-family:sans-serif;display:table-cell;padding:.2em 1em .2em 1em}
-.ccm-bugtracker-mwe .current-status-header:hover{color:#7b7b7b;cursor:pointer}.ccm-bugtracker-mwe .header{text-align:center;text-decoration:underline}
-.ccm-bugtracker-mwe .bug:nth-child(even){background-color:#d5fcfe}.ccm-bugtracker-mwe .bug-id{width:2em;border-right:1px solid grey}
-.ccm-bugtracker-mwe .name{width:15%;font-weight:bold;border-right:1px solid grey}
-.ccm-bugtracker-mwe .current-status{width:3em;border-right:1px solid grey}.ccm-bugtracker-mwe .subscriber{border-right:1px solid grey}
+.ccm-bugtrackerMwe .bugs-overview{min-width:600px;float:left;clear:right;display:table;background-color:white;border:2px solid #36f0fe;padding:.5em}
+.ccm-bugtrackerMwe .bug,.ccm-bugtrackerMwe .header{display:table-row;width:100%}.ccm-bugtrackerMwe .bug>*,.ccm-bugtrackerMwe .header>*{font-family:sans-serif;display:table-cell;padding:.2em 1em .2em 1em}
+.ccm-bugtrackerMwe .current-status-header:hover{color:#7b7b7b;cursor:pointer}.ccm-bugtrackerMwe .header{text-align:center;text-decoration:underline}
+.ccm-bugtrackerMwe .bug:nth-child(even){background-color:#d5fcfe}.ccm-bugtrackerMwe .bug-id{width:2em;border-right:1px solid grey}
+.ccm-bugtrackerMwe .name{width:15%;font-weight:bold;border-right:1px solid grey}.ccm-bugtrackerMwe .current-status{width:3em;border-right:1px solid grey}
+.ccm-bugtrackerMwe .subscriber{border-right:1px solid grey}
