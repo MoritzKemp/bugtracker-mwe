@@ -6,7 +6,6 @@ ccm.component({
     name: 'bugtracker-mwe',
     config: {
         html        : [ccm.store, {local: 'js/templates.json'}],
-        store       : [ccm.store, {local: 'js/bugs.json'}],
         remoteStore : [ccm.store, {store: 'bugtracker', url: 'http://ccm2.inf.h-brs.de/index.js' }],
         key         : 'bugtracker',
         style       : [ccm.load, 'css/bug.css']
@@ -132,9 +131,6 @@ ccm.component({
                 $('.new_bug').click(onClickAddBug);
             });
             
-            
-            
-            
             if(callback) callback();
         };
         
@@ -148,6 +144,15 @@ ccm.component({
                 "description"   : bug.description,
                 "name"          : bug.name,
                 "state"         : bug.state
+            });
+        };
+        
+        self.removeBug = function(bug){
+            if (!bug.key){
+                console.log('Bug not persisted yet. Skip delete request.');
+            }
+            self.remoteStore.del(bug.key, function(){
+                console.log('Delete bug with key ' + bug.key);
             });
         };
         
