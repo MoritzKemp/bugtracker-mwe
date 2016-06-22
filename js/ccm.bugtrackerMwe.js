@@ -18,7 +18,7 @@ ccm.component({
         self.render = function(callback){
             
             var element = ccm.helper.element(self);
-            
+            console.log(element);
             //Private function which builds the overview and attaches bugs
             var buildOverview = function(dataset){
                 
