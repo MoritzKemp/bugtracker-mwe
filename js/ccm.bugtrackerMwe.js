@@ -8,19 +8,23 @@ ccm.component({
         html        : [ccm.store, {local: '../js/templates.json'}],
         remoteStore : [ccm.store, {store: 'bugtracker', url: 'http://ccm2.inf.h-brs.de/index.js' }],
         key         : 'bugtracker',
-        style       : [ccm.load, '../css/bug.css']
+        style       : [ccm.load, '../css/bug.css'],
+        icons       : [ccm.load, 'http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css']
     },
     
     Instance: function(){
         
         var self = this;
         
+        //Private bug storage
+        var bugStore = [];
+        
         self.render = function(callback){
             
             var element = ccm.helper.element(self);
-            console.log(element);
+
             //Private function which builds the overview and attaches bugs
-            var buildOverview = function(dataset){
+            var buildOverview = function(){
                 
                 // Rendern der Grundstrutkur
                 element.html(ccm.helper.html(self.html.get('main')));
@@ -41,17 +45,17 @@ ccm.component({
                 
                 //Render all bugs
                 var i=0;
-                while(dataset[i]){
+                while(bugStore[i]){
 
                     // Create html and wrap in to a jQery object
                     var newBug = $(ccm.helper.html(
                         self.html.get('bug'), 
                         {
-                            bugId       : dataset[i].bugId,
-                            subscriber  : dataset[i].subscriber,
-                            description : dataset[i].description,
-                            status      : dataset[i].state,
-                            name        : dataset[i].name
+                            bugId       : bugStore[i].bugId,
+                            subscriber  : bugStore[i].subscriber,
+                            description : bugStore[i].description,
+                            status      : bugStore[i].state,
+                            name        : bugStore[i].name
                         }
                     ));
                     // Append it to overview
@@ -110,25 +114,55 @@ ccm.component({
             
             var onClickAddBug = function(){
                 console.log('Add new Bug!')
+                
                 // Ein Beispiel:
-                var newBug = {};
+//                var newBug = {};
 //                newBug.bugId = "te3";
 //                newBug.context = "testcontext";
 //                newBug.subsriber = "hans";
 //                newBug.name = "Database broken!";
 //                newBug.state = "open";
 //                newBug.description = "test description ";
-//                self.storeBug(newBug);
+                self.storeBug(newBug);
+            };
+            
+            var onClickRemoveBug = function(context){
+                
+                // Search for bug id
+                var bugId = $(this).parents('.bug').children('.bug-id').html();
+                
+                var bug = {};
+                // Search bug in local bugStore
+                bugStore.forEach(function(elem){
+                    if(elem.bugId === bugId)
+                    {
+                        bug = elem;
+                    }
+                });
+                
+                //Delete bug
+                self.removeBug(bug);
+                self.render();
+            };
+            
+            var onClickEditBug = function(context){
+                
             };
             
             // Fetch data from DB and build overview
             self.remoteStore.get(function(response){
-                buildOverview(response);   
+                bugStore = response;
+                
+                buildOverview();   
                 //Add status header action
                 $('.current-status-header').click(onClickStatusHeader);
                 //Add new bug submit action
                 // Not the correct button, just checking if it works
                 $('.new_bug').click(onClickAddBug);
+                
+                
+                $('.bug-buttons > .fa-edit').click(this, onClickEditBug);
+                $('.bug-buttons > .fa-remove').click(this, onClickRemoveBug);
             });
             
             if(callback) callback();
@@ -136,7 +170,6 @@ ccm.component({
         
         //Public function to save bugs into remote database
         self.storeBug = function(bug){
-            
             self.remoteStore.set({
                 "bugId"         : bug.bugId,
                 "context"       : bug.context,
@@ -144,16 +177,29 @@ ccm.component({
                 "description"   : bug.description,
                 "name"          : bug.name,
                 "state"         : bug.state
+            }, function(updatedStore){
+                bugStore.push(updatedStore);
             });
+            
         };
         
         self.removeBug = function(bug){
             if (!bug.key){
                 console.log('Bug not persisted yet. Skip delete request.');
             }
+            
+            // Delete remote
             self.remoteStore.del(bug.key, function(){
+                bugStore.forEach(function(elm, index){
+                    if(elm.key === bug.key)
+                    {
+                        // Delete local
+                        delete bugStore[index];
+                    }
+                });
                 console.log('Delete bug with key ' + bug.key);
             });
+            
         };
         
         //Private function to sort bugs after their status

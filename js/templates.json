@@ -63,6 +63,20 @@
                 "tag" : "div",
                 "class": "description",
                 "inner" : "%description%"
+            },
+            {
+                "tag" : "div",
+                "class": "bug-buttons",
+                "inner" : [
+                    {
+                        "tag"   : "i",
+                        "class" : "fa fa-edit"
+                    },
+                    {
+                        "tag"   : "i",
+                        "class" : "fa fa-remove"
+                    }
+                ]
             }
         ]
     }
