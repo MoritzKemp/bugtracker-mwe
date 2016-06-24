@@ -38,7 +38,7 @@ ccm.component({
                         nameTitle: "Name",
                         statusTitle: "Status",
                         subscriberTitle: "Subscriber",
-                        descriptionTitle: "Describtion"
+                        descriptionTitle: "Description"
                     }
                 ));
                 header.appendTo(overview);
@@ -114,15 +114,6 @@ ccm.component({
             
             var onClickAddBug = function(){
                 console.log('Add new Bug!')
-                
-                // Ein Beispiel:
-//                var newBug = {};
-//                newBug.bugId = "te3";
-//                newBug.context = "testcontext";
-//                newBug.subsriber = "hans";
-//                newBug.name = "Database broken!";
-//                newBug.state = "open";
-//                newBug.description = "test description ";
                 self.storeBug(newBug);
             };
             
@@ -153,14 +144,10 @@ ccm.component({
             self.remoteStore.get(function(response){
                 bugStore = response;
                 
-                buildOverview();   
-                //Add status header action
+                buildOverview();
+                
+                //Assign action handlers
                 $('.current-status-header').click(onClickStatusHeader);
-                //Add new bug submit action
-                // Not the correct button, just checking if it works
-                $('.new_bug').click(onClickAddBug);
-                
-                
                 $('.bug-buttons > .fa-edit').click(this, onClickEditBug);
                 $('.bug-buttons > .fa-remove').click(this, onClickRemoveBug);
             });
@@ -186,20 +173,19 @@ ccm.component({
         self.removeBug = function(bug){
             if (!bug.key){
                 console.log('Bug not persisted yet. Skip delete request.');
-            }
-            
-            // Delete remote
-            self.remoteStore.del(bug.key, function(){
-                bugStore.forEach(function(elm, index){
-                    if(elm.key === bug.key)
-                    {
-                        // Delete local
-                        delete bugStore[index];
-                    }
+            } else {
+                // Delete remote
+                self.remoteStore.del(bug.key, function(){
+                    bugStore.forEach(function(elm, index){
+                        if(elm.key === bug.key)
+                        {
+                            // Delete local
+                            delete bugStore[index];
+                        }
+                    });
+                    console.log('Delete bug with key ' + bug.key);
                 });
-                console.log('Delete bug with key ' + bug.key);
-            });
-            
+            }
         };
         
         //Private function to sort bugs after their status

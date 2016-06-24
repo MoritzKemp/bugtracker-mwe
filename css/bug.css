@@ -29,7 +29,7 @@
 
 .ccm-bugtrackerMwe .header{
     text-align: center;
-    text-decoration: underline;
+    color: #016f67;
 }
 
 .ccm-bugtrackerMwe .bug:nth-child(even){
@@ -53,10 +53,22 @@
 }
 
 
-.ccm-bugtrackerMwe .subscriber {
+.ccm-bugtrackerMwe .subscriber, 
+.ccm-bugtrackerMwe .description{
     border-right: 1px solid grey;
 }
 
-.ccm-bugtrackerMwe .description{
+.ccm-bugtrackerMwe .fa-remove,
+.ccm-bugtrackerMwe .fa-edit {
+    margin-right: 0.2em;
 }
 
+.ccm-bugtrackerMwe .fa-remove:hover{
+    color: red;
+    cursor: pointer;
+}
+
+.ccm-bugtrackerMwe .fa-edit:hover{
+    color: gray;
+    cursor: pointer;
+}
