@@ -59,12 +59,20 @@
 }
 
 .ccm-bugtrackerMwe .fa-remove,
-.ccm-bugtrackerMwe .fa-edit {
+.ccm-bugtrackerMwe .fa-edit,
+.ccm-bugtrackerMwe .fa-check,
+.ccm-bugtrackerMwe .fa-trash{
     margin-right: 0.2em;
 }
 
-.ccm-bugtrackerMwe .fa-remove:hover{
+.ccm-bugtrackerMwe .fa-remove:hover,
+.ccm-bugtrackerMwe .fa-trash:hover{
     color: red;
+    cursor: pointer;
+}
+
+.ccm-bugtrackerMwe .fa-check:hover{
+    color: chartreuse;
     cursor: pointer;
 }
 

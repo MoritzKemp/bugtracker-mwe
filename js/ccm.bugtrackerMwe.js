@@ -16,15 +16,12 @@ ccm.component({
         
         var self = this;
         
-        //Private bug storage
-        var bugStore = [];
-        
         self.render = function(callback){
-            
+            //resetDatabase();
             var element = ccm.helper.element(self);
 
             //Private function which builds the overview and attaches bugs
-            var buildOverview = function(){
+            var buildOverview = function(bugs){
                 
                 // Rendern der Grundstrutkur
                 element.html(ccm.helper.html(self.html.get('main')));
@@ -45,17 +42,16 @@ ccm.component({
                 
                 //Render all bugs
                 var i=0;
-                while(bugStore[i]){
-
+                while(bugs[i]){
                     // Create html and wrap in to a jQery object
                     var newBug = $(ccm.helper.html(
                         self.html.get('bug'), 
                         {
-                            bugId       : bugStore[i].bugId,
-                            subscriber  : bugStore[i].subscriber,
-                            description : bugStore[i].description,
-                            status      : bugStore[i].state,
-                            name        : bugStore[i].name
+                            bugId       : bugs[i].bugId,
+                            subscriber  : bugs[i].subscriber,
+                            description : bugs[i].description,
+                            status      : bugs[i].state,
+                            name        : bugs[i].name
                         }
                     ));
                     // Append it to overview
@@ -64,8 +60,8 @@ ccm.component({
                 }
                 
                 // Append button to overview
-                newBug.append("<br><button class='new_bug'>Neuer Bug</button>");
-                newBug.find('.new_bug').click(function () {
+                overview.append("<br><button class='new_bug'>Neuer Bug</button>");
+                overview.find('.new_bug').click(function () {
                     overview.html("<h2>Add a new bug ...</h2>" + "<form>" +
                         "<label for='bug_subject'>Subject</label>"
                         + "<textarea id='subject' name='ta_subject' cols='20' rows='5' required></textarea>"
@@ -114,39 +110,80 @@ ccm.component({
             
             var onClickAddBug = function(){
                 console.log('Add new Bug!')
-                self.storeBug(newBug);
+                //self.storeBug(newBug);
             };
             
-            var onClickRemoveBug = function(context){
+            var onClickRemoveBug = function(){
                 
                 // Search for bug id
                 var bugId = $(this).parents('.bug').children('.bug-id').html();
                 
-                var bug = {};
-                // Search bug in local bugStore
-                bugStore.forEach(function(elem){
-                    if(elem.bugId === bugId)
-                    {
-                        bug = elem;
-                    }
+                // Search bug by id and delete
+                self.remoteStore.get(function(bugs){
+                    bugs.forEach(function(elem){
+                        
+                        if(
+                            elem.bugId === bugId ||
+                            elem.bugId.toString() === bugId    
+                        ){ 
+                            self.removeBug(elem);
+                        }
+                    });
+                    self.render();
                 });
                 
-                //Delete bug
-                self.removeBug(bug);
-                self.render();
             };
             
-            var onClickEditBug = function(context){
+            var onClickEditBug = function(){
                 
+                // Search for bug id
+                var bugRow = $(this).parents('.bug');
+                var bugId = bugRow.children('.bug-id').html();
+                
+                var bug = {};
+                
+                self.remoteStore.get(function(bugs){
+                    bugs.forEach(function(elem){
+                        if(
+                            elem.bugId === bugId ||
+                            elem.bugId.toString() === bugId    
+                        ){
+                            bug = elem;
+                        }
+                    });
+                    //Create editable row from template
+                    var editableRow = $(ccm.helper.html(
+                            self.html.get('bug-edit'), 
+                            {
+                                bugId       : bug.bugId,
+                                subscriber  : bug.subscriber,
+                                description : bug.description,
+                                name        : bug.name
+                            }
+                        ));
+
+                    //Attach actions
+                    editableRow.find('.fa-check').click(function(){
+                        bug.state = editableRow.find('#states').val();
+                        console.log(bug);
+                        self.remoteStore.set(bug, function(){
+                           self.render(); 
+                        });
+                    });
+                    
+                    editableRow.find('.fa-trash').click(function(){
+                        self.render();
+                    });
+                    
+                    //Replace row
+                    bugRow.replaceWith(editableRow);
+                });
             };
             
-            // Fetch data from DB and build overview
+            // Actually build overview
             self.remoteStore.get(function(response){
-                bugStore = response;
-                
-                buildOverview();
-                
-                //Assign action handlers
+                buildOverview(response);
+                //Assign action handlers after rendering
                 $('.current-status-header').click(onClickStatusHeader);
                 $('.bug-buttons > .fa-edit').click(this, onClickEditBug);
                 $('.bug-buttons > .fa-remove').click(this, onClickRemoveBug);
@@ -157,15 +194,8 @@ ccm.component({
         
         //Public function to save bugs into remote database
         self.storeBug = function(bug){
-            self.remoteStore.set({
-                "bugId"         : bug.bugId,
-                "context"       : bug.context,
-                "subscriber"    : bug.subscriber,
-                "description"   : bug.description,
-                "name"          : bug.name,
-                "state"         : bug.state
-            }, function(updatedStore){
-                bugStore.push(updatedStore);
+            self.remoteStore.set(bug, function(response){
+                console.log(response)
             });
             
         };
@@ -175,15 +205,8 @@ ccm.component({
                 console.log('Bug not persisted yet. Skip delete request.');
             } else {
                 // Delete remote
-                self.remoteStore.del(bug.key, function(){
-                    bugStore.forEach(function(elm, index){
-                        if(elm.key === bug.key)
-                        {
-                            // Delete local
-                            delete bugStore[index];
-                        }
-                    });
-                    console.log('Delete bug with key ' + bug.key);
+                self.remoteStore.del(bug.key, function(delResponse){
+                    console.log("Delete bug.");
                 });
             }
         };
@@ -211,6 +234,51 @@ ccm.component({
                     }     
                 });
             });
+        };
+        
+        var resetDatabase = function(){
+            
+            // Delete content
+            self.remoteStore.get(function(response){
+                response.forEach(function(elm){
+                    self.remoteStore.del(elm.key, function(resp){
+                });
+                });
+            });
+            
+            // set test content
+            self.remoteStore.set(
+                 {
+                    "bugId"         : "3442",
+                    "context"       : "my specific url",
+                    "subscriber"    : "Moritz",
+                    "description"   : "my bug description",
+                    "name"          : "Bug No. 1",
+                    "state"         : "pending"
+                }
+             );
+            
+            self.remoteStore.set(
+                 {
+                    "bugId"         : "6552",
+                    "context"       : "my specific url 2",
+                    "description"   : "my bug description 2, somewhat a little bit longer.",
+                    "subscriber"    : "Fred",
+                    "name"          : "Bug No. 2",
+                    "state"         : "pending"
+                }
+             );
+            
+            self.remoteStore.set(
+                 {
+                    "bugId"         : "2252",
+                    "context"       : "my specific url 2",
+                    "description"   : "my bug description 2, somewhat a little bit longer.",
+                    "subscriber"    : "Nasenbär",
+                    "name"          : "Bug No. 22",
+                    "state"         : "closed"
+                }
+             );      
         };
     }
 });
