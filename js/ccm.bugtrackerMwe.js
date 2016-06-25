@@ -8,15 +8,18 @@ ccm.component({
         html: [ccm.store, {local: 'js/templates.json'}],
         remoteStore: [ccm.store, {store: 'bugtracker', url: 'http://ccm2.inf.h-brs.de/index.js'}],
         key: 'demo',
-        store: [ccm.store, 'js/input.json'],
-        style: [ccm.load, 'css/bug.css'],
-        icons: [ccm.load, 'http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css']
+        store:  [ccm.store, 'js/input.json'],
+        style:  [ccm.load, 'css/bug.css'],
+        icons:  [ccm.load, 'http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'],
+        user:   [ccm.instance, 'https://kaul.inf.h-brs.de/ccm/components/user2.js']
     },
 
     Instance: function () {
 
         var self = this;
-
+        
+        var bugSorting = 0;
+        
         self.render = function (callback) {
 
             var element = ccm.helper.element(self);
@@ -44,6 +47,9 @@ ccm.component({
                 ));
                 header.appendTo(overview);
 
+                //Sort bugs
+                bugs = sortStatus(bugs);
+
                 //Render all bugs
                 var i = 0;
                 while (bugs[i]) {
@@ -59,11 +65,12 @@ ccm.component({
                             name: bugs[i].name
                         }
                     ));
-                    // Append it to overview
                     newBug.appendTo(overview);
                     i++;
                 }
-
+                
+                
+                
                 // Append button to overview
                 newBug.append("<br><button class='new_bug'>Neuer Bug</button>");
                 newBug.find('.new_bug').click(function () {
@@ -108,7 +115,7 @@ ccm.component({
                             }
 
                             element.html(ccm.helper.html(html, function () {
-                                console.log(ccm.helper.formData(jQuery(this)));
+                                
                                 var newData = ccm.helper.formData(jQuery(this));
                                 var bug = {
                                     "bugId"         : "11",
@@ -171,25 +178,13 @@ ccm.component({
                 );
             };
 
-
             var onClickStatusHeader = function () {
-                if ($(this).hasClass('no-order')) {
-                    $(this).removeClass('no-order');
-                    $(this).addClass('asc');
-                    sortStatus(0);
-                    return;
+                if (bugSorting === 0) {
+                    bugSorting = 1;
+                } else {
+                    bugSorting = 0;
                 }
-                if ($(this).hasClass('asc')) {
-                    $(this).removeClass('asc');
-                    $(this).addClass('desc');
-                    sortStatus(1);
-                    return;
-                }
-                if ($(this).hasClass('desc')) {
-                    $(this).removeClass('desc');
-                    $(this).addClass('asc');
-                    sortStatus(0);
-                }
+                self.render();
             };
             
 
@@ -197,7 +192,7 @@ ccm.component({
 
                 // Search for bug id
                 var bugId = $(this).parents('.bug').children('.bug-id').html();
-
+                console.log(bugId);
                 // Search bug by id and delete
                 self.remoteStore.get(function (bugs) {
                     bugs.forEach(function (elem) {
@@ -246,7 +241,6 @@ ccm.component({
                     //Attach actions
                     editableRow.find('.fa-check').click(function () {
                         bug.state = editableRow.find('#states').val();
-                        console.log(bug);
                         self.remoteStore.set(bug, function () {
                             self.render();
                         });
@@ -264,9 +258,9 @@ ccm.component({
             // Actually build overview
             self.remoteStore.get(function (response) {
                 buildOverview(response);
-                console.log(response);
+
                 //Assign action handlers after rendering
-                $('.current-status-header').click(onClickStatusHeader);
+                $('.current-status-header').click(this, onClickStatusHeader);
                 $('.bug-buttons > .fa-edit').click(this, onClickEditBug);
                 $('.bug-buttons > .fa-remove').click(this, onClickRemoveBug);
             });
@@ -292,26 +286,23 @@ ccm.component({
         };
 
         //Private function to sort bugs after their status
-        var sortStatus = function (order) {
-            //Get overview container
-            var overview = $('.bugs-overview');
-            //Get all bugs and remove them
-            var bugs = overview.find('.bug');
-            bugs.remove();
+        var sortStatus = function (bugs) {
 
-            if (order === 0) {
+            var sortedBugs = [];
+            if (bugSorting === 0) {
                 order = ['open', 'pending', 'closed'];
             } else {
                 order = ['closed', 'pending', 'open'];
             }
 
             order.forEach(function (key) {
-                bugs.each(function () {
-                    if ($(this).find('.current-status').html() === key) {
-                        $(this).appendTo(overview);
+                bugs.forEach(function (elem) {
+                    if (elem.state === key) {
+                        sortedBugs.push(elem);
                     }
                 });
             });
+            return sortedBugs;
         };
 
         var resetDatabase = function () {
