@@ -41,7 +41,13 @@
     border-right: 1px solid grey;
 }
 
-.ccm-bugtrackerMwe .name {
+.ccm-bugtracker-Mwe .priority {
+    width: 15%;
+    font-weight: bold;
+    border-right: 1px solid grey;
+}
+
+.ccm-bugtracker-Mwe .name {
     width: 15%;
     font-weight: bold;
     border-right: 1px solid grey;
@@ -53,7 +59,7 @@
 }
 
 
-.ccm-bugtrackerMwe .subscriber, 
+.ccm-bugtrackerMwe .subscriber,
 .ccm-bugtrackerMwe .description{
     border-right: 1px solid grey;
 }
@@ -64,6 +70,13 @@
 .ccm-bugtrackerMwe .fa-trash{
     margin-right: 0.2em;
 }
+/*///////////////////////////////////////////////////////////////*/
+.ccm-input {
+    font-family: Arial, serif;
+    overflow-x: auto;
+    background-color: white;
+}
+
 
 .ccm-bugtrackerMwe .fa-remove:hover,
 .ccm-bugtrackerMwe .fa-trash:hover{
@@ -79,4 +92,25 @@
 .ccm-bugtrackerMwe .fa-edit:hover{
     color: gray;
     cursor: pointer;
+}
+
+
+.ccm-input > form > input[type=submit] {
+
+    cursor: pointer;
+
+}
+
+.ccm-input > form > table > tr > td {
+
+    padding-bottom: 0.5em;
+    vertical-align: top;
+
+}
+
+.ccm-input > form > table > tr > td:first-child {
+
+    padding-top: 0.15em;
+    padding-right: 0.5em;
+
 }

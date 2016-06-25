@@ -3,6 +3,7 @@
     "bugs": [
         {
             "bugId"         : "33de",
+            "priority"      : "mittel",
             "context"       : "my specific url",
             "subscriber"    : "Moritz",
             "description"   : "my bug description",
@@ -11,6 +12,7 @@
         },
         {
             "bugId"         : "84fg",
+            "priority"      : "mittel",
             "context"       : "my specific url 2",
             "description"   : "my bug description 2, somewhat a little bit longer.",
             "subscriber"    : "Fred",
@@ -19,6 +21,7 @@
         },
         {
             "bugId"         : "42o",
+            "priority"      : "mittel",
             "context"       : "my specific url 2",
             "description"   : "my bug description 2, somewhat a little bit longer.",
             "subscriber"    : "Nasenbär",

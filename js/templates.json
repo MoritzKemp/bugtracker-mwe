@@ -1,149 +1,162 @@
 {
-    "main" : {
-        "tag" : "div",
-        "class" : "bugs-overview"
-    },
-    "header"  : {
-        "tag"   : "div",
-        "class" : "header",
-        "inner" : [
-            {
-                "tag"   : "div",
-                "class" : "bug-id-header",
-                "inner" : "%bugIdTitle%"
-            },
-            {
-                "tag" : "div",
-                "class": "name-header",
-                "inner" : "%nameTitle%"
-            },
-            {
-                "tag"   : "div",
-                "class" : "current-status-header no-order",
-                "inner" : "%statusTitle%"
-            },
-            {
-                "tag"   : "div",
-                "class" : "subscriber-header",
-                "inner" : "%subscriberTitle%"
-            },
-            {
-                "tag" : "div",
-                "class": "description-header",
-                "inner" : "%descriptionTitle%"
-            }
+  "main": {
+    "tag": "div",
+    "class": "bugs-overview"
+  },
+  "header": {
+    "tag": "div",
+    "class": "header",
+    "inner": [
+      {
+        "tag": "div",
+        "class": "bug-id-header",
+        "inner": "%bugIdTitle%"
+      },
+      {
+        "tag": "div",
+        "class": "priority-header",
+        "inner": "%priorityTitle%"
+      },
+      {
+        "tag": "div",
+        "class": "name-header",
+        "inner": "%nameTitle%"
+      },
+      {
+        "tag": "div",
+        "class": "current-status-header no-order",
+        "inner": "%statusTitle%"
+      },
+      {
+        "tag": "div",
+        "class": "subscriber-header",
+        "inner": "%subscriberTitle%"
+      },
+      {
+        "tag": "div",
+        "class": "description-header",
+        "inner": "%descriptionTitle%"
+      }
+    ]
+  },
+  "bug": {
+    "tag": "div",
+    "class": "bug",
+    "inner": [
+      {
+        "tag": "div",
+        "class": "bug-id",
+        "inner": "%bugId%"
+      },
+      {
+        "tag": "div",
+        "class": "class_priority",
+        "inner": "%priority%"
+      },
+      {
+        "tag": "div",
+        "class": "name",
+        "inner": "%name%"
+      },
+      {
+        "tag": "div",
+        "class": "current-status",
+        "inner": "%status%"
+      },
+      {
+        "tag": "div",
+        "class": "subscriber",
+        "inner": "%subscriber%"
+      },
+      {
+        "tag": "div",
+        "class": "description",
+        "inner": "%description%"
+      },
+      {
+        "tag": "div",
+        "class": "bug-buttons",
+        "inner": [
+          {
+            "tag": "i",
+            "class": "fa fa-edit"
+          },
+          {
+            "tag": "i",
+            "class": "fa fa-remove"
+          }
         ]
-    },
-    
-    "bug" : {
-        "tag" : "div",
-        "class" : "bug",
-        "inner" : [
+      }
+    ]
+  },
+  "bug-edit": {
+    "tag": "div",
+    "class": "bug bug-edit",
+    "inner": [
+      {
+        "tag": "div",
+        "class": "bug-id",
+        "inner": "%bugId%"
+      },
+      {
+        "tag": "div",
+        "class": "class_priority",
+        "inner": "%priority%"
+      },
+      {
+        "tag": "div",
+        "class": "name",
+        "inner": "%name%"
+      },
+      {
+        "tag": "div",
+        "class": "current-status",
+        "inner": {
+          "tag": "select",
+          "id": "states",
+          "inner": [
             {
-                "tag"   : "div",
-                "class" : "bug-id",
-                "inner" : "%bugId%"
+              "tag": "option",
+              "value": "open",
+              "inner": "open"
             },
             {
-                "tag" : "div",
-                "class": "name",
-                "inner" : "%name%"
+              "tag": "option",
+              "value": "pending",
+              "inner": "pending"
             },
             {
-                "tag"   : "div",
-                "class" : "current-status",
-                "inner" : "%status%"
-            },
-            {
-                "tag" : "div",
-                "class": "subscriber",
-                "inner" : "%subscriber%"
-            },
-            {
-                "tag" : "div",
-                "class": "description",
-                "inner" : "%description%"
-            },
-            {
-                "tag" : "div",
-                "class": "bug-buttons",
-                "inner" : [
-                    {
-                        "tag"   : "i",
-                        "class" : "fa fa-edit"
-                    },
-                    {
-                        "tag"   : "i",
-                        "class" : "fa fa-remove"
-                    }
-                ]
+              "tag": "option",
+              "value": "closed",
+              "inner": "closed"
             }
+          ]
+        }
+      },
+      {
+        "tag": "div",
+        "class": "subscriber",
+        "inner": "%subscriber%"
+      },
+      {
+        "tag": "div",
+        "class": "description",
+        "inner": "%description%"
+      },
+      {
+        "tag": "div",
+        "class": "bug-buttons",
+        "inner": [
+          {
+            "tag": "i",
+            "class": "fa fa-check"
+          },
+          {
+            "tag": "i",
+            "class": "fa fa-trash"
+          }
         ]
-    },
-    "bug-edit" : {
-        "tag" : "div",
-        "class" : "bug bug-edit",
-        "inner" : [
-            {
-                "tag"   : "div",
-                "class" : "bug-id",
-                "inner" : "%bugId%"
-            },
-            {
-                "tag" : "div",
-                "class": "name",
-                "inner" : "%name%"
-            },
-            {
-                "tag"   : "div",
-                "class" : "current-status",
-                "inner" : {
-                   
-                    "tag"   : "select",
-                    "id"    : "states",
-                    "inner" : [
-                        {
-                            "tag"   : "option",
-                            "value" : "open",
-                            "inner" : "open"
-                        },
-                        {
-                            "tag"   : "option",
-                            "value" : "pending",
-                            "inner" : "pending"
-                        },
-                        {
-                            "tag"   : "option",
-                            "value" : "closed",
-                            "inner" : "closed"
-                        }
-                    ]
-                }
-            },
-            {
-                "tag" : "div",
-                "class": "subscriber",
-                "inner" : "%subscriber%"
-            },
-            {
-                "tag" : "div",
-                "class": "description",
-                "inner" : "%description%"
-            },
-            {
-                "tag" : "div",
-                "class": "bug-buttons",
-                "inner" : [
-                    {
-                        "tag"   : "i",
-                        "class" : "fa fa-check"
-                    },
-                    {
-                        "tag"   : "i",
-                        "class" : "fa fa-trash"
-                    }
-                ]
-            }
-        ]
-    }
+      }
+    ]
+  }
 }
