@@ -65,8 +65,8 @@ ccm.component({
                 }
 
                 // Append button to overview
-                newBug.append("<br><button class='new_bug'>Neuer Bug</button>");
-                newBug.find('.new_bug').click(function () {
+                overview.append("<br><button class='new_bug'>Neuer Bug</button>");
+                overview.find('.new_bug').click(function () {
                         self.store.get(self.key, function (dataset) {
 
                             if (dataset === null)
@@ -110,8 +110,9 @@ ccm.component({
                             element.html(ccm.helper.html(html, function () {
                                 console.log(ccm.helper.formData(jQuery(this)));
                                 var newData = ccm.helper.formData(jQuery(this));
+                                var uniq = (new Date()).getTime();
                                 var bug = {
-                                    "bugId"         : "11",
+                                    "bugId"         : uniq,
                                     "priority"      : newData.priority,
                                     "context"       : "my specific url",
                                     "subscriber"    : newData.subscriber,
@@ -120,6 +121,7 @@ ccm.component({
                                     "state"         : newData.status
                                 };
                                 self.storeBug(bug);
+                                self.render(overview);
                                 return false;
 
                             }));
@@ -191,7 +193,7 @@ ccm.component({
                     sortStatus(0);
                 }
             };
-            
+
 
             var onClickRemoveBug = function () {
 
