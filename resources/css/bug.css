@@ -1,6 +1,11 @@
 .ccm-bugtrackerMwe .bugs-overview{min-width:600px;float:left;clear:right;display:table;background-color:white;border:2px solid #36f0fe;padding:.5em}
-.ccm-bugtrackerMwe .bug,.ccm-bugtrackerMwe .header{display:table-row;width:100%}.ccm-bugtrackerMwe .bug>*,.ccm-bugtrackerMwe .header>*{font-family:sans-serif;display:table-cell;padding:.2em 1em .2em 1em}
-.ccm-bugtrackerMwe .current-status-header:hover{color:#7b7b7b;cursor:pointer}.ccm-bugtrackerMwe .header{text-align:center;text-decoration:underline}
+.ccm-bugtrackerMwe .bug,.ccm-bugtrackerMwe .header{display:table-row;width:100%}.ccm-bugtrackerMwe .bug>*,.ccm-bugtrackerMwe .header>*{font-family:sans-serif;display:table-cell;padding:.2em 1em .2em 1em;vertical-align:top}
+.ccm-bugtrackerMwe .current-status-header:hover{color:#7b7b7b;cursor:pointer}.ccm-bugtrackerMwe .header{text-align:center;color:#016f67}
 .ccm-bugtrackerMwe .bug:nth-child(even){background-color:#d5fcfe}.ccm-bugtrackerMwe .bug-id{width:2em;border-right:1px solid grey}
-.ccm-bugtrackerMwe .name{width:15%;font-weight:bold;border-right:1px solid grey}.ccm-bugtrackerMwe .current-status{width:3em;border-right:1px solid grey}
-.ccm-bugtrackerMwe .subscriber{border-right:1px solid grey}
+.ccm-bugtrackerMwe .priority{border-right:1px solid grey}.ccm-bugtrackerMwe .name{border-right:1px solid grey}
+.ccm-bugtrackerMwe .current-status{width:3em;border-right:1px solid grey}.ccm-bugtrackerMwe .subscriber,.ccm-bugtrackerMwe .description{border-right:1px solid grey}
+.ccm-bugtrackerMwe .fa-remove,.ccm-bugtrackerMwe .fa-edit,.ccm-bugtrackerMwe .fa-check,.ccm-bugtrackerMwe .fa-trash{margin-right:.2em}
+.ccm-bugtrackerMwe #status-mark{margin-left:.2em}.ccm-bugtrackerMwe .fa-remove:hover,.ccm-bugtrackerMwe .fa-trash:hover{color:red;cursor:pointer}
+.ccm-bugtrackerMwe .fa-check:hover{color:chartreuse;cursor:pointer}.ccm-bugtrackerMwe .fa-edit:hover{color:gray;cursor:pointer}
+.ccm-input{font-family:Arial,serif;overflow-x:auto;background-color:white}.ccm-input>form>input[type=submit]{cursor:pointer}
+.ccm-input>form>table>tr>td{padding-bottom:.5em;vertical-align:top}.ccm-input>form>table>tr>td:first-child{padding-top:.15em;padding-right:.5em}
