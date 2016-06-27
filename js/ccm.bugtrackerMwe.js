@@ -15,7 +15,7 @@ ccm.component({
     
     /**
      * @summary default component configuration
-     * @type {ccm.components,buhtrackerMwe.config}
+     * @type {ccm.components.bugtrackerMwe.config}
      * @ignore
      */
     config: {
