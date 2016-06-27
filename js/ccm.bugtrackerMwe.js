@@ -5,11 +5,11 @@
 ccm.component({
     name: 'bugtrackerMwe',
     config: {
-        html: [ccm.store, {local: 'js/templates.json'}],
+        html: [ccm.store, {local: '../js/templates.json'}],
         remoteStore: [ccm.store, {store: 'bugtracker', url: 'http://ccm2.inf.h-brs.de/index.js'}],
         key: 'demo',
-        store:  [ccm.store, 'js/input.json'],
-        style:  [ccm.load, 'css/bug.css'],
+        store:  [ccm.store, '../js/input.json'],
+        style:  [ccm.load, '../css/bug.css'],
         icons:  [ccm.load, 'http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'],
         user:   [ccm.instance, 'https://kaul.inf.h-brs.de/ccm/components/user2.js']
     },
