@@ -13,9 +13,6 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script src="http://akless.github.io/ccm-developer/libs/ccm.min.js"></script>
-    <script>
-        ccm.render('http://moritzkemp.github.io/bugtracker-mwe/resources/js/ccm.bugtrackerMwe.js');
-    </script>
   </head>
   
   <body>
@@ -35,7 +32,16 @@
 
       </header>
       <section>
-          
+          <div id="bugtracker">
+          <script>
+            ccm.render(
+                'http://moritzkemp.github.io/bugtracker-mwe/resources/js/ccm.bugtrackerMwe.js', 
+                {
+                    element: $('#bugtracker')
+                }
+            );
+        </script>
+        </div>
       </section>
       <footer>
         <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
