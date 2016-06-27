@@ -34,17 +34,30 @@ ccm.component({
          * @summary own context
          * @type {ccm.instance}
          * @this ccm.instance
+         * @private
          */
         var self = this;
         
+        /**
+         * @summary State variable to indicate current bug sorting order
+         * @private
+         */
         var bugSorting = 0;
         
+        /**
+         * @summary Render bugtracker overview and set action handlers
+         * @public
+         */
         self.render = function (callback) {
 
             // Get own website area
             var element = ccm.helper.element(self);
 
-            //Private function which builds the overview and attaches bugs
+            /**
+             * @summary Builds the overview and attaches given bugs
+             * @param bugs array of bugs to display
+             * @private
+             */
             var buildOverview = function (bugs) {
                 
                 // Rendern der Grundstrutkur
@@ -88,6 +101,10 @@ ccm.component({
                 }
             };
 
+            /**
+             * @summary Builds the input mask to add new bugs
+             * @private
+             */
             var buildBugInputView = function() {
                 
                 var overview = element.find('.bugs-overview');
@@ -200,7 +217,11 @@ ccm.component({
                     }
                 );
             };
-
+            
+            /**
+             * @summary Action handler when user clicks on status header
+             * @private
+             */
             var onClickStatusHeader = function () {
                 if (bugSorting === 0) {
                     bugSorting = 1;
@@ -210,7 +231,10 @@ ccm.component({
                 self.render();
             };
 
-
+            /**
+             * @summary Action handler when user clicks on icon to remove a bug
+             * @private
+             */
             var onClickRemoveBug = function () {
 
                 // Search for bug id
@@ -232,6 +256,10 @@ ccm.component({
 
             };
 
+            /**
+             * @summary Action handler when user clicks on icon to edit a bug
+             * @private
+             */
             var onClickEditBug = function () {
 
                 // Search for bug id
@@ -293,14 +321,20 @@ ccm.component({
             if (callback) callback();
         };
 
-        //Public function to save bugs into remote database
+        /**
+         * @summary Public function to save bugs into remote database
+         * @public
+         */
         self.storeBug = function(bug){
             self.remoteStore.set(bug, function(response){
                 console.log(response)
             });
-
         };
 
+        /**
+         * @summary Public function to remove given bug in remote database
+         * @public
+         */
         self.removeBug = function (bug) {
             if (!bug.key) {
                 console.log('Bug not persisted yet. Skip delete request.');
@@ -310,7 +344,12 @@ ccm.component({
             });
         };
 
-        //Private function to sort bugs after their status
+        /**
+         * @summary Private function to sort given bugs after their status
+         * @param bugs array of bugs to sort
+         * @return array of sorted bugs
+         * @private
+         */
         var sortStatus = function (bugs) {
 
             var sortedBugs = [];
@@ -334,6 +373,10 @@ ccm.component({
             return sortedBugs;
         };
         
+        /**
+         * @summary For development purpose, resets remote database
+         * @private
+         */
         var resetDatabase = function () {
 
             // Delete content
