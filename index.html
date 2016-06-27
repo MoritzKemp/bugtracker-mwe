@@ -4,13 +4,14 @@
 <!-- Use custom config for local developing tests -->
 
 <body>
-Test
-<div class="component-wrapper">
+Ein Bugtracker
+<div id="component-wrapper">
 
     <script>
         ccm.render('js/ccm.bugtrackerMwe.js', {
             html        : [ccm.store, {local: 'js/templates.json'}],
-            style       : [ccm.load, 'css/bug.css']
+            style       : [ccm.load, 'css/bug.css'],
+            element     : $('#component-wrapper')
         });
     </script>
 </div>

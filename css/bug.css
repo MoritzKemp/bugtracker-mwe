@@ -20,6 +20,7 @@
     font-family: sans-serif;
     display: table-cell;
     padding: 0.2em 1em 0.2em 1em;
+    vertical-align: top;
 }
 
 .ccm-bugtrackerMwe .current-status-header:hover{
@@ -41,15 +42,11 @@
     border-right: 1px solid grey;
 }
 
-.ccm-bugtracker-Mwe .priority {
-    width: 15%;
-    font-weight: bold;
+.ccm-bugtrackerMwe .priority {
     border-right: 1px solid grey;
 }
 
-.ccm-bugtracker-Mwe .name {
-    width: 15%;
-    font-weight: bold;
+.ccm-bugtrackerMwe .name {
     border-right: 1px solid grey;
 }
 
@@ -57,7 +54,6 @@
     width: 3em;
     border-right: 1px solid grey;
 }
-
 
 .ccm-bugtrackerMwe .subscriber,
 .ccm-bugtrackerMwe .description{
@@ -70,13 +66,10 @@
 .ccm-bugtrackerMwe .fa-trash{
     margin-right: 0.2em;
 }
-/*///////////////////////////////////////////////////////////////*/
-.ccm-input {
-    font-family: Arial, serif;
-    overflow-x: auto;
-    background-color: white;
-}
 
+.ccm-bugtrackerMwe #status-mark{
+    margin-left: 0.2em;
+}
 
 .ccm-bugtrackerMwe .fa-remove:hover,
 .ccm-bugtrackerMwe .fa-trash:hover{
@@ -94,6 +87,16 @@
     cursor: pointer;
 }
 
+.ccm-bugtrackerMwe #description-update{
+    
+}
+
+
+.ccm-input {
+    font-family: Arial, serif;
+    overflow-x: auto;
+    background-color: white;
+}
 
 .ccm-input > form > input[type=submit] {
 

@@ -58,8 +58,8 @@
             "caption": "Abgeschlossen"
           },
           {
-            "value": "new",
-            "caption": "Neu",
+            "value": "open",
+            "caption": "Offen",
             "selected": true
           }
 

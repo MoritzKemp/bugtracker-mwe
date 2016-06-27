@@ -25,7 +25,14 @@
       {
         "tag": "div",
         "class": "current-status-header no-order",
-        "inner": "%statusTitle%"
+        "inner": [
+            "%statusTitle%",
+            {
+                "tag"   : "i",
+                "id"    : "status-mark",
+                "class" : "fa fa-sort-down"
+            }
+        ]
       },
       {
         "tag": "div",
@@ -50,7 +57,7 @@
       },
       {
         "tag": "div",
-        "class": "class_priority",
+        "class": "priority",
         "inner": "%priority%"
       },
       {
@@ -100,7 +107,7 @@
       },
       {
         "tag": "div",
-        "class": "class_priority",
+        "class": "priority",
         "inner": "%priority%"
       },
       {
@@ -141,7 +148,12 @@
       {
         "tag": "div",
         "class": "description",
-        "inner": "%description%"
+        "inner": {
+            "tag"   : "textarea",
+            "rows"  : 4,
+            "id"    : "description-text",
+            "inner" : "%description%"
+        }
       },
       {
         "tag": "div",

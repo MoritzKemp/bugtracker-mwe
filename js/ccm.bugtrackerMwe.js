@@ -22,13 +22,12 @@ ccm.component({
         
         self.render = function (callback) {
 
+            // Get own website area
             var element = ccm.helper.element(self);
 
             //Private function which builds the overview and attaches bugs
             var buildOverview = function (bugs) {
                 
-                console.log("step 1");
-
                 // Rendern der Grundstrutkur
                 element.html(ccm.helper.html(self.html.get('main')));
                 var overview = ccm.helper.find(self, '.bugs-overview');
@@ -38,9 +37,9 @@ ccm.component({
                     self.html.get('header'),
                     {
                         bugIdTitle: "ID",
-                        priorityTitle: "Priorität",
-                        nameTitle: "Titel",
-                        statusTitle: "Status",
+                        priorityTitle: "Priority",
+                        nameTitle: "Title",
+                        statusTitle: "State",
                         subscriberTitle: "Subscriber",
                         descriptionTitle: "Description"
                     }
@@ -68,11 +67,13 @@ ccm.component({
                     newBug.appendTo(overview);
                     i++;
                 }
+            };
+
+            var buildBugInputView = function() {
                 
-                
-                
-                // Append button to overview
+                var overview = element.find('.bugs-overview');
                 overview.append("<br><button class='new_bug'>Neuer Bug</button>");
+                
                 overview.find('.new_bug').click(function () {
                         self.store.get(self.key, function (dataset) {
 
@@ -98,8 +99,6 @@ ccm.component({
                                 if (typeof dataset.fieldset === 'string')
                                     html.inner.unshift({tag: 'legend', inner: dataset.fieldset});
                             }
-
-                            console.log("HIER");
 
                             if (dataset.form) {
                                 if (dataset.form === true) dataset.form = {button: true};
@@ -128,7 +127,7 @@ ccm.component({
                                     "state"         : newData.status
                                 };
                                 self.storeBug(bug);
-                                self.render(overview);
+                                self.render();
                                 return false;
 
                             }));
@@ -176,6 +175,9 @@ ccm.component({
                                 });
                             }
                         });
+                        
+                        //Set history to enable Browser-Back-Btn
+                        location.hash = 'newBug';
                     }
                 );
             };
@@ -243,6 +245,7 @@ ccm.component({
                     //Attach actions
                     editableRow.find('.fa-check').click(function () {
                         bug.state = editableRow.find('#states').val();
+                        bug.description = editableRow.find('#description-text').val();
                         self.remoteStore.set(bug, function () {
                             self.render();
                         });
@@ -260,7 +263,8 @@ ccm.component({
             // Actually build overview
             self.remoteStore.get(function (response) {
                 buildOverview(response);
-
+                buildBugInputView();
+                
                 //Assign action handlers after rendering
                 $('.current-status-header').click(this, onClickStatusHeader);
                 $('.bug-buttons > .fa-edit').click(this, onClickEditBug);
@@ -293,8 +297,12 @@ ccm.component({
             var sortedBugs = [];
             if (bugSorting === 0) {
                 order = ['open', 'pending', 'closed'];
+                $('#status-mark').removeClass('fa-sort-up');
+                $('#status-mark').addClass('fa-sort-down');
             } else {
                 order = ['closed', 'pending', 'open'];
+                $('#status-mark').removeClass('fa-sort-down');
+                $('#status-mark').addClass('fa-sort-up');
             }
 
             order.forEach(function (key) {
@@ -306,7 +314,7 @@ ccm.component({
             });
             return sortedBugs;
         };
-
+        
         var resetDatabase = function () {
 
             // Delete content
@@ -350,6 +358,14 @@ ccm.component({
                     "state": "closed"
                 }
             );
+        };
+        
+        //Return to bug overview if Browser-Back-Btn is pressed
+        window.onhashchange = function(){
+            console.log(location.hash);
+            if(location.hash !== '#newBug'){
+                self.render();
+            }
         };
     }
 });
