@@ -1,9 +1,23 @@
-/*
- * ccm-component implementing a bugtracker feature.
+/**
+ * @overview ccm-component implementing a bugtracker feature
+ * @author Johan Martens <johann.martens@smail.inf.h-brs.de>
+ * @author Moritz Kemp <moritz.kemp@smail.inf.h-brs.de>
+ * @license The MIT License (MIT)
  */
 
 ccm.component({
+    
+    /**
+     * @type {string}
+     * @ignore
+     */
     name: 'bugtrackerMwe',
+    
+    /**
+     * @summary default component configuration
+     * @type {ccm.components,buhtrackerMwe.config}
+     * @ignore
+     */
     config: {
         html: [ccm.store, {local: '../js/templates.json'}],
         remoteStore: [ccm.store, {store: 'bugtracker', url: 'http://ccm2.inf.h-brs.de/index.js'}],
@@ -16,6 +30,11 @@ ccm.component({
 
     Instance: function () {
 
+        /**
+         * @summary own context
+         * @type {ccm.instance}
+         * @this ccm.instance
+         */
         var self = this;
         
         var bugSorting = 0;
