@@ -2,7 +2,7 @@
  * @overview ccm-component implementing a bugtracker feature
  * @author Johan Martens <johann.martens@smail.inf.h-brs.de>
  * @author Moritz Kemp <moritz.kemp@smail.inf.h-brs.de>
- * @license The MIT License (MIT)
+ * @license The MIT License (MIT) Test addition
  */
 
 ccm.component({
@@ -14,7 +14,7 @@ ccm.component({
     name: 'bugtrackerMwe',
     
     /**
-     * @summary default component configuration
+     * Default component configuration
      * @type {ccm.components.bugtrackerMwe.config}
      * @ignore
      */
@@ -31,7 +31,7 @@ ccm.component({
     Instance: function () {
 
         /**
-         * @summary own context
+         * Own context
          * @type {ccm.instance}
          * @this ccm.instance
          * @private
@@ -39,13 +39,13 @@ ccm.component({
         var self = this;
         
         /**
-         * @summary State variable to indicate current bug sorting order
+         * State variable to indicate current bug sorting order
          * @private
          */
         var bugSorting = 0;
         
         /**
-         * @summary Render bugtracker overview and set action handlers
+         * Render bugtracker overview and set action handlers
          * @public
          */
         self.render = function (callback) {
@@ -54,7 +54,7 @@ ccm.component({
             var element = ccm.helper.element(self);
 
             /**
-             * @summary Builds the overview and attaches given bugs
+             * Builds the overview and attaches given bugs
              * @param bugs array of bugs to display
              * @private
              */
@@ -102,7 +102,7 @@ ccm.component({
             };
 
             /**
-             * @summary Builds the input mask to add new bugs
+             * Builds the input mask to add new bugs
              * @private
              */
             var buildBugInputView = function() {
@@ -219,7 +219,7 @@ ccm.component({
             };
             
             /**
-             * @summary Action handler when user clicks on status header
+             * Action handler when user clicks on status header
              * @private
              */
             var onClickStatusHeader = function () {
@@ -257,7 +257,7 @@ ccm.component({
             };
 
             /**
-             * @summary Action handler when user clicks on icon to edit a bug
+             * Action handler when user clicks on icon to edit a bug
              * @private
              */
             var onClickEditBug = function () {
@@ -322,7 +322,7 @@ ccm.component({
         };
 
         /**
-         * @summary Public function to save bugs into remote database
+         * Public function to save bugs into remote database
          * @public
          */
         self.storeBug = function(bug){
@@ -332,7 +332,7 @@ ccm.component({
         };
 
         /**
-         * @summary Public function to remove given bug in remote database
+         * Public function to remove given bug in remote database
          * @public
          */
         self.removeBug = function (bug) {
@@ -345,7 +345,7 @@ ccm.component({
         };
 
         /**
-         * @summary Private function to sort given bugs after their status
+         * Private function to sort given bugs after their status
          * @param bugs array of bugs to sort
          * @return array of sorted bugs
          * @private
@@ -374,7 +374,7 @@ ccm.component({
         };
         
         /**
-         * @summary For development purpose, resets remote database
+         * For development purpose, resets remote database
          * @private
          */
         var resetDatabase = function () {
