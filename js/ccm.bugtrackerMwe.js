@@ -87,7 +87,7 @@ ccm.component(
                     header.appendTo(overview);
 
                     //Sort bugs
-                    bugs = sortStatus(bugs);
+                    sortStatus(bugs);
 
                     //Render all bugs
                     var i = 0;
@@ -231,7 +231,7 @@ ccm.component(
                  * @private
                  */
                 var onClickStatusHeader = function () {
-                    if (bugSorting === 0) {
+                    if (bugSorting === 0) {   
                         bugSorting = 1;
                     } else {
                         bugSorting = 0;
@@ -319,7 +319,7 @@ ccm.component(
                 self.remoteStore.get(function (response) {
                     buildOverview(response);
                     buildBugInputView();
-
+                    
                     //Assign action handlers after rendering
                     $('.current-status-header').click(this, onClickStatusHeader);
                     $('.bug-buttons > .fa-edit').click(this, onClickEditBug);
@@ -357,35 +357,31 @@ ccm.component(
             /**
              * Private function to sort given bugs after their status
              * @param bugs array of bugs to sort
-             * @return array of sorted bugs
              * @private
              */
             var sortStatus = function (bugs) {
 
-                var sortedBugs = [];
+                var compareBugs = function(a, b){
+                    if(a.state === "open" || b.state === "closed") return -1;
+                    else if(a.state === b.state) return 0;
+                    else return 1;
+                }
+                
+                var reverseOrder = function(a,b) {return (compareBugs(a,b)*-1)}
+                
                 if (bugSorting === 0) {
-                    order = ['open', 'pending', 'closed'];
                     $('#status-mark').removeClass('fa-sort-up');
                     $('#status-mark').addClass('fa-sort-down');
+                    bugs.sort(compareBugs);
                 } else {
-                    order = ['closed', 'pending', 'open'];
                     $('#status-mark').removeClass('fa-sort-down');
                     $('#status-mark').addClass('fa-sort-up');
+                    bugs.sort(reverseOrder);
                 }
-
-                order.forEach(function (key) {
-                    bugs.forEach(function (elem) {
-                        if (elem.state === key) {
-                            sortedBugs.push(elem);
-                        }
-                    });
-                });
-                return sortedBugs;
             };
 
-            /**
+            /*
              * For development purpose, resets remote database
-             * @private
              */
             var resetDatabase = function () {
 
@@ -432,6 +428,10 @@ ccm.component(
                 );
             };
 
+            /**
+             * If current view is the bug in put mask and
+             * the <i>Back</i>-Button is pressed, return to bug overview.
+             */
             //Return to bug overview if Browser-Back-Btn is pressed
             window.onhashchange = function(){
                 console.log(location.hash);
