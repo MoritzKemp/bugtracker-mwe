@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Index</title>
+	<title>Documentation Global</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -70,39 +70,13 @@
 		<div id="main">
 			
 
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-	<h1 class="page-title">Index</h1>
+	<h1 class="page-title">Global</h1>
 <section>
 
 <header>
     
         <h2>
-        ccm.bugtrackerMwe.js
+        
         </h2>
         
     
@@ -112,8 +86,6 @@
 <article>
     <div class="container-overview">
     
-        
-            <div class="description"><p>ccm-component implementing a bugtracker feature</p></div>
         
 
         
@@ -137,25 +109,9 @@
 	
 
 	
-	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
-	<dd class="tag-author">
-		<ul>
-			<li><a href="mailto:johann.martens@smail.inf.h-brs.de">Johan Martens</a></li>
-			
-			<li><a href="mailto:moritz.kemp@smail.inf.h-brs.de">Moritz Kemp</a></li>
-			</ul>
-	</dd>
-	
 
 	
 
-	
-	<dt class="tag-license method-doc-label method-doc-details-label">License:</dt>
-	<dd class="tag-license">
-		<ul class="dummy">
-			<li>The MIT License (MIT) Test addition</li>
-		</ul>
-	</dd>
 	
 
 	
@@ -190,6 +146,294 @@
 
     
 
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        <dl>
+                
+<hr>
+<dt class="name" id="BugObject">
+    <h4>BugObject</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>JSON structure of a bug</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>bugId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Unique bug index</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>priority</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Bug's priority, typical low or high</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>context</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>URL or other description of context in which the bug appears</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>subscriber</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Person who reports the bug</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Description of the bug</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Name of the bug, very short descritpion</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>state</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Current state of the bug, may be open, pending or closed</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+        <p class="code-caption"> A valid bug object </p>
+    
+    <pre class="sunlight-highlight-javascript">{
+ &quot;bugId&quot;         : &quot;33de&quot;,
+ &quot;priority&quot;      : &quot;mittel&quot;,
+ &quot;context&quot;       : &quot;my specific url&quot;,
+ &quot;subscriber&quot;    : &quot;Moritz&quot;,
+ &quot;description&quot;   : &quot;my bug description&quot;,
+ &quot;name&quot;          : &quot;Bug No. 1&quot;,
+ &quot;state&quot;         : &quot;pending&quot;
+}</pre>
+
+
+    
+</dd>
+
+            </dl>
     
 
     
