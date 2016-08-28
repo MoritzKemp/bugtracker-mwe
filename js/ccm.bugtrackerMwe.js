@@ -28,9 +28,8 @@ ccm.component(
         config: {
             html: [ccm.store, {local: '../js/templates.json'}],
             remoteStore: [ccm.store, {store: 'bugtracker', url: 'http://ccm2.inf.h-brs.de/index.js'}],
-            key: 'demo',
-            store:  [ccm.store, '../js/input.json'],
             style:  [ccm.load, '../css/bug.css'],
+            inputDataStore: [ccm.store, '../js/input.json'],
             icons:  [ccm.load, 'http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'],
             user:   [ccm.instance, 'https://kaul.inf.h-brs.de/ccm/components/user2.js']
         },
@@ -68,7 +67,7 @@ ccm.component(
                  */
                 var buildOverview = function (bugs) {
 
-                    // Rendern der Grundstrutkur
+                    // Render base structure from html template
                     element.html(ccm.helper.html(self.html.get('main')));
                     var overview = ccm.helper.find(self, '.bugs-overview');
 
@@ -114,116 +113,35 @@ ccm.component(
                  * @private
                  */
                 var buildBugInputView = function() {
+                    
+                    /*Create the input ccm-component*/
+                    inputComponent = ccm.instance(
+                        'https://akless.github.io/ccm-components/resources/input/ccm.input.js', 
+                        {
+                            data: {
+                                store: self.inputDataStore,
+                                key: 'bugs'
+                            },
+                            onFinish: function(bug){
+                                var index = (new Date()).getTime();
+                                bug.bugId = index;
+                                bug.key = index;
+                                self.storeBug(bug)
+                            }
+                        },
+                        function(inputComponent){
+                            var overview = element.find('.bugs-overview');
+                            overview.append("<br><button class='new_bug'>Neuer Bug</button>");
 
-                    var overview = element.find('.bugs-overview');
-                    overview.append("<br><button class='new_bug'>Neuer Bug</button>");
+                            overview.find('.new_bug').click(function () {
+                                    inputComponent.render();
 
-                    overview.find('.new_bug').click(function () {
-                            self.store.get(self.key, function (dataset) {
-
-                                if (dataset === null)
-                                    return self.store.set(
-                                        {key: self.key},
-                                        function (dataset) {
-                                            self.key = dataset.key;
-                                            element.remove();
-                                            self.render();
-                                        });
-                                var html = [{tag: 'table', inner: []}];
-
-                                if (dataset.inputs)
-                                    if (Array.isArray(dataset.inputs))
-                                        for (var i = 0; i < dataset.inputs.length; i++)
-                                            addInput(dataset.inputs[i]);
-                                    else
-                                        addInput(dataset.inputs);
-
-                                if (dataset.fieldset) {
-                                    html = {tag: 'fieldset', inner: html};
-                                    if (typeof dataset.fieldset === 'string')
-                                        html.inner.unshift({tag: 'legend', inner: dataset.fieldset});
+                                    //Set history to enable Browser-Back-Btn
+                                    location.hash = 'newBug';
                                 }
-
-                                if (dataset.form) {
-                                    if (dataset.form === true) dataset.form = {button: true};
-                                    html = {tag: 'form', onsubmit: dataset.form.onsubmit, inner: html};
-                                    if (dataset.form.button) {
-                                        var button = {tag: 'input', type: 'submit', value: dataset.form.button};
-                                        if (button.value === true) delete button.value;
-                                        if (dataset.fieldset)
-                                            html.inner.inner.push(button);
-                                        else
-                                            html.inner.push(button);
-                                    }
-                                }
-
-                                element.html(ccm.helper.html(html, function () {
-
-                                    var newData = ccm.helper.formData(jQuery(this));
-                                    var uniq = (new Date()).getTime();
-                                    var bug = {
-                                        "bugId"         : uniq,
-                                        "priority"      : newData.priority,
-                                        "context"       : "my specific url",
-                                        "subscriber"    : newData.subscriber,
-                                        "description"   : newData.story,
-                                        "name"          : newData.titel,
-                                        "state"         : newData.status
-                                    };
-                                    self.storeBug(bug);
-                                    self.render();
-                                    return false;
-
-                                }));
-
-                                function addInput(input) {
-
-                                    var label = input.label || input.name;
-                                    delete input.label;
-
-                                    switch (input.input) {
-                                        case 'select':
-                                        case 'textarea':
-                                            input.tag = input.input;
-                                            break;
-                                        default:
-                                            input.tag = 'input';
-                                            input.type = input.input;
-                                    }
-
-
-                                    if (input.input === 'select') {
-                                        input.inner = input.options;
-                                        delete input.options;
-                                        for (var i = 0; i < input.inner.length; i++) {
-                                            input.inner[i].tag = 'option';
-                                            input.inner[i].inner = input.inner[i].caption || input.inner[i].value;
-                                            delete input.inner[i].caption;
-                                        }
-                                    }
-
-                                    delete input.input;
-
-                                    html[0].inner.push({
-                                        tag: 'tr',
-                                        inner: [
-                                            {
-                                                tag: 'td',
-                                                inner: label
-                                            },
-                                            {
-                                                tag: 'td',
-                                                inner: input
-                                            }
-                                        ]
-                                    });
-                                }
-                            });
-
-                            //Set history to enable Browser-Back-Btn
-                            location.hash = 'newBug';
+                            );
                         }
-                    );
+                    );                    
                 };
 
                 /**
@@ -247,7 +165,6 @@ ccm.component(
 
                     // Search for bug id
                     var bugId = $(this).parents('.bug').children('.bug-id').html();
-                    console.log(bugId);
                     // Search bug by id and delete
                     self.remoteStore.get(function (bugs) {
                         bugs.forEach(function (elem) {
@@ -394,45 +311,44 @@ ccm.component(
                 });
 
                 // set test content
-                self.remoteStore.set(
-                    {
-                        "bugId": "3442",
-                        "context": "my specific url",
-                        "subscriber": "Moritz",
-                        "description": "my bug description",
-                        "name": "Bug No. 1",
-                        "state": "pending"
-                    }
-                );
-
-                self.remoteStore.set(
-                    {
-                        "bugId": "6552",
-                        "context": "my specific url 2",
-                        "description": "my bug description 2, somewhat a little bit longer.",
-                        "subscriber": "Fred",
-                        "name": "Bug No. 2",
-                        "state": "pending"
-                    }
-                );
-
-                self.remoteStore.set(
-                    {
-                        "bugId": "2252",
-                        "context": "my specific url 2",
-                        "description": "my bug description 2, somewhat a little bit longer.",
-                        "subscriber": "Nasenbär",
-                        "name": "Bug No. 22",
-                        "state": "closed"
-                    }
-                );
+//                self.remoteStore.set(
+//                    {
+//                        "bugId": "3442",
+//                        "context": "my specific url",
+//                        "subscriber": "Moritz",
+//                        "description": "my bug description",
+//                        "name": "Bug No. 1",
+//                        "state": "pending"
+//                    }
+//                );
+//
+//                self.remoteStore.set(
+//                    {
+//                        "bugId": "6552",
+//                        "context": "my specific url 2",
+//                        "description": "my bug description 2, somewhat a little bit longer.",
+//                        "subscriber": "Fred",
+//                        "name": "Bug No. 2",
+//                        "state": "pending"
+//                    }
+//                );
+//
+//                self.remoteStore.set(
+//                    {
+//                        "bugId": "2252",
+//                        "context": "my specific url 2",
+//                        "description": "my bug description 2, somewhat a little bit longer.",
+//                        "subscriber": "Nasenbär",
+//                        "name": "Bug No. 22",
+//                        "state": "closed"
+//                    }
+//                );
             };
 
             /**
              * If current view is the bug in put mask and
              * the <i>Back</i>-Button is pressed, return to bug overview.
              */
-            //Return to bug overview if Browser-Back-Btn is pressed
             window.onhashchange = function(){
                 console.log(location.hash);
                 if(location.hash !== '#newBug'){

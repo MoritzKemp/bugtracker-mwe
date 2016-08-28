@@ -1,7 +1,6 @@
 {
-  "demo":
+  "bugs":
   {
-    "key": "test",
     "form":
     {
       "button": true,
@@ -11,70 +10,70 @@
     "inputs":
     [
       {
-        "label": "Priorität",
+        "label": "Priority",
         "name": "priority",
         "input": "select",
         "options":
         [
           {
             "value": "high",
-            "caption": "Hoch"
+            "caption": "high"
           },
           {
             "value": "medium",
-            "caption": "mittel",
+            "caption": "medium",
             "selected": true
           },
           {
             "value": "low",
-            "caption": "niedrig"
+            "caption": "low"
           }
         ]
       },
       {
         "label": "Titel",
-        "name": "titel",
+        "name": "name",
         "input": "text",
-        "placeholder": "Button xy defekt"
+        "placeholder": "Short description, e.g. Button xy fails"
       },
       {
-        "label": "Melder",
+        "label": "Subscriber",
         "name": "subscriber",
         "input": "text",
-        "placeholder": "Jon Doe"
+        "placeholder": "Your name or nick"
       },
       {
         "label": "Status",
-        "name": "status",
+        "name": "state",
         "input": "select",
         "options":
         [
           {
             "value": "pending",
-            "caption": "In Bearbeitung"
+            "caption": "Pending"
           },
           {
             "value": "closed",
-            "caption": "Abgeschlossen"
+            "caption": "Closed"
           },
           {
             "value": "open",
-            "caption": "Offen",
+            "caption": "Open",
             "selected": true
           }
 
         ]
       },
       {
-        "label": "Beschreibung",
-        "name": "story",
+        "label": "Description",
+        "name": "description",
         "placeholder": "Bug appeared in module ...",
         "input": "textarea",
         "rows": "2",
         "cols": "18"
       },
       {
-        "label": "Farbe",
+        "label": "Colour",
         "name": "colour",
         "input": "color"
       }
