@@ -31,7 +31,7 @@
         ]
       },
       {
-        "label": "Titel",
+        "label": "Name",
         "name": "name",
         "input": "text",
         "placeholder": "Short description, e.g. Button xy fails"

@@ -131,7 +131,7 @@ ccm.component(
                         },
                         function(inputComponent){
                             var overview = element.find('.bugs-overview');
-                            overview.append("<br><button class='new_bug'>Neuer Bug</button>");
+                            overview.append("<br><button class='new_bug'>Add bug</button>");
 
                             overview.find('.new_bug').click(function () {
                                     inputComponent.render();
