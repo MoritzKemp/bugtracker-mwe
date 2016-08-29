@@ -96,6 +96,11 @@
       }
     ]
   },
+  "new-bug-btn" : {
+      "tag": "button",
+      "class": "new-bug-btn",
+      "inner": "Add bug"
+  },
   "bug-edit": {
     "tag": "div",
     "class": "bug bug-edit",

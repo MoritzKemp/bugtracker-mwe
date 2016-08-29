@@ -87,33 +87,7 @@
     cursor: pointer;
 }
 
-.ccm-bugtrackerMwe #description-update{
-    
-}
 
-
-.ccm-input {
-    font-family: Arial, serif;
-    overflow-x: auto;
-    background-color: white;
-}
-
-.ccm-input > form > input[type=submit] {
-
-    cursor: pointer;
-
-}
-
-.ccm-input > form > table > tr > td {
-
-    padding-bottom: 0.5em;
-    vertical-align: top;
-
-}
-
-.ccm-input > form > table > tr > td:first-child {
-
-    padding-top: 0.15em;
-    padding-right: 0.5em;
-
+.ccm-bugtrackerMwe .new-bug-btn{
+    margin-top: 1em;
 }

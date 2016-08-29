@@ -2,7 +2,7 @@
  * @overview ccm-component implementing a bugtracker feature
  * @author Johan Martens <johann.martens@smail.inf.h-brs.de>
  * @author Moritz Kemp <moritz.kemp@smail.inf.h-brs.de>
- * @license The MIT License (MIT) Test addition
+ * @license The MIT License (MIT)
  */
 
 /* Register given ccm-bugtracker component in ccm-framework */
@@ -18,20 +18,18 @@ ccm.component(
         /**
          * Default component configuration
          * @type {ccm.components.bugtrackerMwe.types.config}
-         * @property {ccm.store} html Basic HTML-Template
-         * @property {ccm.store} remoteStore Remote Database configuration
-         * @property {ccm.store} store Template for bug input mask
-         * @property {ccm.load} style CSS style loading
-         * @property {ccm.load} icons Load remote icon fonts from cloudflare
-         * @property {ccm.instance} user Load ccm-component <i>user</i> from remote ccm market
+         * @property {ccm.store} html           - Basic HTML-Template
+         * @property {ccm.store} remoteStore    - Remote Database configuration
+         * @property {ccm.load} style           - CSS style loading
+         * @property {ccm.load} icons           - Load remote icon fonts from cloudflare
+         * @property {ccm.store} inputDataStore - Template for bug input mask, configures the input-ccm-component
          */
         config: {
             html: [ccm.store, {local: '../js/templates.json'}],
             remoteStore: [ccm.store, {store: 'bugtracker', url: 'http://ccm2.inf.h-brs.de/index.js'}],
             style:  [ccm.load, '../css/bug.css'],
-            inputDataStore: [ccm.store, '../js/input.json'],
             icons:  [ccm.load, 'http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'],
-            user:   [ccm.instance, 'https://kaul.inf.h-brs.de/ccm/components/user2.js']
+            inputDataStore: [ccm.store, '../js/input.json'],
         },
 
         /**
@@ -59,7 +57,7 @@ ccm.component(
 
                 // Get own website area
                 var element = ccm.helper.element(self);
-
+                
                 /**
                  * Builds the overview and attaches given bugs
                  * @param bugs array of bugs to display
@@ -67,9 +65,8 @@ ccm.component(
                  */
                 var buildOverview = function (bugs) {
 
-                    // Render base structure from html template
-                    element.html(ccm.helper.html(self.html.get('main')));
-                    var overview = ccm.helper.find(self, '.bugs-overview');
+                    // Get container from html template
+                    var overview = $(ccm.helper.html(self.html.get('main')));
 
                     // Attach header
                     var header = $(ccm.helper.html(
@@ -106,6 +103,13 @@ ccm.component(
                         newBug.appendTo(overview);
                         i++;
                     }
+                    
+                    //Attach  button to add new bugs
+                    var newBugButton = $(ccm.helper.html(self.html.get('new-bug-btn')));
+                    newBugButton.appendTo(overview);
+                    
+                    //Render constructed overview
+                    element.html(overview);
                 };
 
                 /**
@@ -122,6 +126,7 @@ ccm.component(
                                 store: self.inputDataStore,
                                 key: 'bugs'
                             },
+                            element: self.element,
                             onFinish: function(bug){
                                 var index = (new Date()).getTime();
                                 bug.bugId = index;
@@ -130,14 +135,8 @@ ccm.component(
                             }
                         },
                         function(inputComponent){
-                            var overview = element.find('.bugs-overview');
-                            overview.append("<br><button class='new_bug'>Add bug</button>");
-
-                            overview.find('.new_bug').click(function () {
+                            ccm.helper.find(self, '.new-bug-btn').click(function () {
                                     inputComponent.render();
-
-                                    //Set history to enable Browser-Back-Btn
-                                    location.hash = 'newBug';
                                 }
                             );
                         }
@@ -343,17 +342,6 @@ ccm.component(
 //                        "state": "closed"
 //                    }
 //                );
-            };
-
-            /**
-             * If current view is the bug in put mask and
-             * the <i>Back</i>-Button is pressed, return to bug overview.
-             */
-            window.onhashchange = function(){
-                console.log(location.hash);
-                if(location.hash !== '#newBug'){
-                    self.render();
-                }
             };
     }
 });
