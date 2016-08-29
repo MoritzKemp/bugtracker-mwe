@@ -1,8 +1,13 @@
 /**
- * @overview ccm-component implementing a bugtracker feature
- * @author Johan Martens <johann.martens@smail.inf.h-brs.de>
+ * @overview
+ * Welcome to the documentation of the bugtrackerMwe component.
+ * This bugtracker is a component for the ccm-framework by Andre Kless.<br>
+ * Landing page for ccm-developers [here]{@link https://akless.github.io/ccm-developer/}. <br>
+ * API documentation of the ccm-framework [here]{@link http://akless.github.io/ccm-developer/api/ccm/index.html}. <br>
+ * @author Johann Martens <johann.martens@smail.inf.h-brs.de>
  * @author Moritz Kemp <moritz.kemp@smail.inf.h-brs.de>
  * @license The MIT License (MIT)
+
  */
 
 /* Register given ccm-bugtracker component in ccm-framework */
@@ -18,11 +23,13 @@ ccm.component(
         /**
          * Default component configuration
          * @type {ccm.components.bugtrackerMwe.types.config}
-         * @property {ccm.store} html           - Basic HTML-Template
-         * @property {ccm.store} remoteStore    - Remote Database configuration
-         * @property {ccm.load} style           - CSS style loading
-         * @property {ccm.load} icons           - Load remote icon fonts from cloudflare
-         * @property {ccm.store} inputDataStore - Template for bug input mask, configures the input-ccm-component
+         * @property {ccm.types.element} element    - ccm instance website area
+         * @property {ccm.store} html               - Basic HTML-Template
+         * @property {ccm.store} remoteStore        - Remote database configuration
+         * @property {ccm.load} style               - CSS stylesheet
+         * @property {ccm.load} icons               - Load remote icon fonts from cloudflare
+         * @property {ccm.store} inputDataStore     - Template for bug input mask, configures the input-ccm-component
+         * @see [input-ccm-component documentation]{@link https://akless.github.io/ccm-components/api/input/}
          */
         config: {
             html: [ccm.store, {local: '../js/templates.json'}],
@@ -246,7 +253,7 @@ ccm.component(
             };
 
             /**
-             * Public function to save bugs into remote database
+             * Public function to save given bug into remote database
              * @param {BugObject} bug Bug to be added to the bugtracker's database
              * @public
              */
