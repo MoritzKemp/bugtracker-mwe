@@ -7,5 +7,4 @@
 .ccm-bugtrackerMwe .fa-remove,.ccm-bugtrackerMwe .fa-edit,.ccm-bugtrackerMwe .fa-check,.ccm-bugtrackerMwe .fa-trash{margin-right:.2em}
 .ccm-bugtrackerMwe #status-mark{margin-left:.2em}.ccm-bugtrackerMwe .fa-remove:hover,.ccm-bugtrackerMwe .fa-trash:hover{color:red;cursor:pointer}
 .ccm-bugtrackerMwe .fa-check:hover{color:chartreuse;cursor:pointer}.ccm-bugtrackerMwe .fa-edit:hover{color:gray;cursor:pointer}
-.ccm-input{font-family:Arial,serif;overflow-x:auto;background-color:white}.ccm-input>form>input[type=submit]{cursor:pointer}
-.ccm-input>form>table>tr>td{padding-bottom:.5em;vertical-align:top}.ccm-input>form>table>tr>td:first-child{padding-top:.15em;padding-right:.5em}
+.ccm-bugtrackerMwe .new-bug-btn{margin-top:1em}
