@@ -4,51 +4,98 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Bugtracker-mwe by MoritzKemp</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-    <script src="javascripts/scale.fix.js"></script>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    
+    <!-- ccm-framework -->
     <script src="http://akless.github.io/ccm-developer/libs/ccm.min.js"></script>
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+ 
+    <!-- Custom css -->
+    <link rel="stylesheet" href="stylesheets/style.css">
   </head>
   
   <body>
-    <div class="wrapper">
       <header>
-        <h1 class="header">Bugtracker-mwe</h1>
-        <p class="header">Bugtracker component for the lecture &quot;Master Web Engineering&quot; by Prof. Kaul at H-BRS.</p>
-
-        <ul>
-          <li class="download"><a class="buttons" href="https://github.com/MoritzKemp/bugtracker-mwe/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/MoritzKemp/bugtracker-mwe/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/MoritzKemp/bugtracker-mwe">View On GitHub</a></li>
-          <li><a href="api/js/index.html">Documentation</a></li>
-        </ul>
-
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/MoritzKemp">MoritzKemp</a></p>
-
-
-      </header>
-      <section>
-          <div id="bugtracker">
-          <script>
-            ccm.render(
-                'http://moritzkemp.github.io/bugtracker-mwe/resources/js/ccm.bugtrackerMwe.js', 
-                {
-                    element: $('#bugtracker')
-                }
-            );
-        </script>
+        <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+          <div class="page-header"><h1>BugtrackerMwe</h1></div>
+          <p class="header">Bugtracker component for the lecture &quot;Master Web Engineering&quot; by Prof. Kaul at H-BRS.</p>
+          <ul>
+            <li class="download"><a class="buttons" href="https://github.com/MoritzKemp/bugtracker-mwe/zipball/master">Download ZIP</a></li>
+            <li class="download"><a class="buttons" href="https://github.com/MoritzKemp/bugtracker-mwe/tarball/master">Download TAR</a></li>
+            <li><a class="buttons github" href="https://github.com/MoritzKemp/bugtracker-mwe">View On GitHub</a></li>
+            <li><a href="api/js/index.html">Documentation API</a></li>
+          </ul>
         </div>
-      </section>
+        <div class="col-sm-2"></div>
+        </div>  
+      </header>
+      <main>
+        <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <h3>Demo</h3>
+            <div id="bugtracker">
+                <script>
+                  ccm.render(
+                      'http://moritzkemp.github.io/bugtracker-mwe/resources/js/ccm.bugtrackerMwe.js', 
+                      {
+                          element: $('#bugtracker')
+                      }
+                  );
+                </script>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+        </div>
+          
+        <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <h3>How to use</h3>
+            <h4>0. Load the ccm framework</h4>
+            Somewhere in your html: <br>
+            <code>&lt;script src="http://akless.github.io/ccm-developer/libs/ccm.min.js"&gt;&lt;/script&gt;</code>
+            <h4>1. Register bugtrackerMwe component to ccm framework</h4>
+            Directly in html for rendering: <br>
+            <pre>
+<code>&lt;script&gt;
+ccm.render('http://moritzkemp.github.io/bugtracker-mwe/resources/js/ccm.bugtrackerMwe.js', 
+    {
+        element: $('#bugtrackerWebsiteArea')
+    }
+);
+&lt;/script&gt;</code></pre>
+            or just create an instance for using inside your own ccm-component:<br>
+                        <pre>
+<code>ccm.instance('http://moritzkemp.github.io/bugtracker-mwe/resources/js/ccm.bugtrackerMwe.js', 
+    {
+        element: $('#bugtrackerWebsiteArea')
+    }
+);</code></pre>
+            Refer to the API-documentation for the <a href="http://localhost:8383/bugtracker-mwe/api/js/ccm.components.bugtrackerMwe.html#toc4__anchor">correct component configuration.</a>
+        </div>
+        <div class="col-sm-2"></div>
+        </div>
+      </main>
       <footer>
-        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
-      </footer>
-    </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		
+        <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <p><small>This project is maintained by <a href="https://github.com/MoritzKemp">MoritzKemp</a> <br>
+            Hosted on <a href="https://pages.github.com">GitHub Pages</a></small></p>
+        </div>
+        <div class="col-sm-2"></div>
+        </div>
+      </footer>	
   </body>
 </html>
