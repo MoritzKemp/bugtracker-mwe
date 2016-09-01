@@ -6,8 +6,26 @@
  * API documentation of the ccm-framework [here]{@link http://akless.github.io/ccm-developer/api/ccm/index.html}. <br>
  * @author Johann Martens <johann.martens@smail.inf.h-brs.de>
  * @author Moritz Kemp <moritz.kemp@smail.inf.h-brs.de>
- * @license The MIT License (MIT)
-
+ * @license MIT License
+ * Copyright (c) 2016 Johann Martens, Moritz Kemp
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of 
+ * this software and associated documentation files (the "Software"), to deal in 
+ * the Software without restriction, including without limitation the rights to use, 
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the 
+ * Software, and to permit persons to whom the Software is furnished to do so, 
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all 
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+ * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION 
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
  */
 
 /* Register given ccm-bugtracker component in ccm-framework */
@@ -43,7 +61,8 @@ ccm.component(
          * @constructs ccm.components.bugtrackerMwe
          */
         Instance: function () {
-
+            
+            
             /**
              * Own context
              * @alias ccm.components.bugtrackerMwe#
@@ -61,10 +80,9 @@ ccm.component(
              * @public
              */
             self.render = function (callback) {
-
+                
                 // Get own website area
                 var element = ccm.helper.element(self);
-                
                 /**
                  * Builds the overview and attaches given bugs
                  * @param bugs array of bugs to display
@@ -272,7 +290,7 @@ ccm.component(
                 if (!bug.key) {
                     console.log('Bug not persisted yet. Skip delete request.');
                 }
-                self.remoteStore.del(bug.key, function () {
+                else self.remoteStore.del(bug.key, function () {
                     console.log('Delete bug with key ' + bug.key);
                 });
             };
@@ -302,7 +320,7 @@ ccm.component(
                     bugs.sort(reverseOrder);
                 }
             };
-
+            
             /*
              * For development purpose, resets remote database
              */
