@@ -51,7 +51,7 @@ ccm.component(
          */
         config: {
             html: [ccm.store, {local: '../js/templates.json'}],
-            remoteStore: [ccm.store, {store: 'bugtracker', url: 'https://ccm2.inf.h-brs.de/index.js'}],
+            remoteStore: [ccm.store, {store: 'bugtracker', url: 'http://ccm2.inf.h-brs.de/index.js'}],
             style:  [ccm.load, '../css/bug.css'],
             icons:  [ccm.load, 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'],
             inputDataStore: [ccm.store, '../js/input.json'],
