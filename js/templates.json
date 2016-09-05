@@ -175,5 +175,20 @@
         ]
       }
     ]
+  },
+  "bug-input-container": {
+      "tag": "div",
+      "class": "bug-input-container",
+      "inner": [
+          {
+              "tag":"button",
+              "id": "input-back-btn",
+              "inner": "Back to overview"
+          },
+          {
+              "tag": "div",
+              "class": "input-comp-area"
+          }
+        ]
   }
 }

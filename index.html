@@ -10,8 +10,11 @@
         ccm.render('js/ccm.bugtrackerMwe.js', {
             html        : [ccm.store, {local: 'js/templates.json'}],
             style       : [ccm.load, 'css/bug.css'],
-            inputDataStore       : [ccm.store, 'js/input.json'],
-            element     : $('#component-wrapper')
+            element     : $('#component-wrapper'),
+            inputData   :  {
+                        store: [ccm.store, 'js/input.json'],
+                        key: 'bugInput'
+                    }
         });
     </script>
 </div>

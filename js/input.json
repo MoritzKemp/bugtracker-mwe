@@ -1,12 +1,6 @@
 {
-  "bugs":
-  {
-    "form":
-    {
-      "button": true,
-      "onsubmit": "%%"
-    },
-    "fieldset": "Create new Bug",
+  "bugInput": {
+    "key": "bugInput",
     "inputs":
     [
       {

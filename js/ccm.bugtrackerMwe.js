@@ -39,14 +39,14 @@ ccm.component(
         name: 'bugtrackerMwe',
 
         /**
-         * Default component configuration
+         * Default component configuration.
          * @type {ccm.components.bugtrackerMwe.types.config}
          * @property {ccm.types.element} element    - ccm instance website area
          * @property {ccm.store} html               - Basic HTML-Template
          * @property {ccm.store} remoteStore        - Remote database configuration
          * @property {ccm.load} style               - CSS stylesheet
          * @property {ccm.load} icons               - Load remote icon fonts from cloudflare
-         * @property {ccm.store} inputDataStore     - Template for bug input mask, configures the input-ccm-component
+         * @property {ccm.store} inputData          - Template for bug input mask, configures the input-ccm-component
          * @see [input-ccm-component documentation]{@link https://akless.github.io/ccm-components/api/input/}
          */
         config: {
@@ -54,7 +54,10 @@ ccm.component(
             remoteStore: [ccm.store, {store: 'bugtracker', url: 'http://ccm2.inf.h-brs.de/index.js'}],
             style:  [ccm.load, '../css/bug.css'],
             icons:  [ccm.load, 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'],
-            inputDataStore: [ccm.store, '../js/input.json'],
+            inputData: {
+                store: [ccm.store, '../js/input.json'],
+                key: 'bugInput'
+            }
         },
 
         /**
@@ -74,6 +77,41 @@ ccm.component(
              * @private
              */
             var bugSorting = 0;
+            
+            /**
+             * Initialize the component instance. <i>ccm</i> does call this 
+             * function after instance creation.
+             * In this context its used to solve the imput-component
+             * dependency.
+             * @param {type} callback
+             */
+            self.init = function(callback){
+                
+                /* By solving the input-component dependency after
+                * the bugtracker-instance construction, custom config
+                * can be applied out of the bugtracker's config. 
+                */
+                ccm.instance(
+                    'https://akless.github.io/ccm-components/resources/input/ccm.input.js',
+                    {
+                        data: self.inputData,
+                        fieldset: 'Add bug',
+                        onFinish: function(bug){
+                            var index = (new Date()).getTime();
+                            bug.bugId = index;
+                            bug.key = index;
+
+                            var event = $.Event('newBug', {'bug': bug});
+                            $('.input-comp-area').trigger(event);
+                        }               
+                    },
+                    function(instance){
+                        self.inputComponent = instance;
+                    }
+                );
+        
+                if(callback) callback();
+            };
 
             /**
              * Render bugtracker overview and set action handlers
@@ -136,37 +174,7 @@ ccm.component(
                     //Render constructed overview
                     element.html(overview);
                 };
-
-                /**
-                 * Builds the input mask to add new bugs
-                 * @private
-                 */
-                var buildBugInputView = function() {
-                    
-                    /*Create the input ccm-component*/
-                    inputComponent = ccm.instance(
-                        'https://akless.github.io/ccm-components/resources/input/ccm.input.js', 
-                        {
-                            data: {
-                                store: self.inputDataStore,
-                                key: 'bugs'
-                            },
-                            element: self.element,
-                            onFinish: function(bug){
-                                var index = (new Date()).getTime();
-                                bug.bugId = index;
-                                bug.key = index;
-                                self.storeBug(bug)
-                            }
-                        },
-                        function(inputComponent){
-                            ccm.helper.find(self, '.new-bug-btn').click(function () {
-                                    inputComponent.render();
-                                }
-                            );
-                        }
-                    );                    
-                };
+                
 
                 /**
                  * Action handler when user clicks on status header
@@ -255,19 +263,55 @@ ccm.component(
                         bugRow.replaceWith(editableRow);
                     });
                 };
+                
+                /**
+                 * Action handler when user clicks on button to add a new bug.
+                 * Creates the input view by rendering the inpu-component
+                 * inside a div component container. Also etablishes a 
+                 * event communication from the input-component to the
+                 * bugtracker-component. 
+                 * @private
+                 */
+                var onClickAddBug = function(){
+                 
+                    //Render input container
+                    element.html(
+                        $(ccm.helper.html(
+                            self.html.get('bug-input-container'))
+                        )
+                    );
 
+                    //Set back-btn handler
+                    ccm.helper.find(self, '#input-back-btn').click(function(){
+                        self.render();
+                    });
+
+                    self.inputComponent.element = $('.input-comp-area');
+
+                    //Render input component
+                    self.inputComponent.render();
+  
+                    //Set event handler. Input-components can trigger
+                    //a specific event which is recognised by the bugtracker-component.
+                    element.on('newBug', function(e){
+                        self.storeBug(e.bug);
+                        self.render();
+                    })
+                };
+                
                 // Actually build overview
                 self.remoteStore.get(function (response) {
                     buildOverview(response);
-                    buildBugInputView();
+                    //buildBugInputView();
                     
                     //Assign action handlers after rendering
+                    $('.new-bug-btn').click(this, onClickAddBug);
                     $('.current-status-header').click(this, onClickStatusHeader);
                     $('.bug-buttons > .fa-edit').click(this, onClickEditBug);
                     $('.bug-buttons > .fa-remove').click(this, onClickRemoveBug);
                 });
-
-                if (callback) callback();
+                
+                
             };
 
             /**
@@ -384,11 +428,11 @@ ccm.component(
  * @example <caption> A valid bug object </caption>
  * {
  *  "bugId"         : "33de",
- *  "priority"      : "mittel",
+ *  "priority"      : "low",
  *  "context"       : "my specific url",
- *  "subscriber"    : "Moritz",
- *  "description"   : "my bug description",
- *  "name"          : "Bug No. 1",
+ *  "subscriber"    : "John Doe",
+ *  "description"   : "My bug description",
+ *  "name"          : "Short bug description",
  *  "state"         : "pending"
  * }
  */

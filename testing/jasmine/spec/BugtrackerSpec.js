@@ -3,10 +3,28 @@ describe("Bugtracker ccm-component", function(){
     describe("when ccm-framework is ready", function(){
         beforeEach(function(done){
             ccm.instance('../js/ccm.bugtrackerMwe.js', {
-                html        : [ccm.store, {local: '../js/templates.json'}],
+                html: [ccm.store, {local: '../js/templates.json'}],
                 style       : [ccm.load, '../css/bug.css'],
-                inputDataStore       : [ccm.store, '../js/input.json'],
-                element     : $('#component-wrapper')
+                element     : $('#component-wrapper'),
+                inputComponent: [
+                    ccm.instance, 
+                    'https://akless.github.io/ccm-components/resources/input/ccm.input.js',
+                    {
+                        data: {
+                            store: [ccm.store, '../js/input.json'],
+                            key: 'bugInput'
+                        },
+                        fieldset: 'Add bug',
+                        onFinish: function(bug){
+                            var index = (new Date()).getTime();
+                            bug.bugId = index;
+                            bug.key = index;
+
+                            var event = $.Event('newBug', {'bug': bug});
+                            $('.input-comp-area').trigger(event);
+                        }
+                    }
+                ]
             },
             function(bugtrackerInstance){
                 bugtracker_local = bugtrackerInstance;
