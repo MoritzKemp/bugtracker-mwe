@@ -1,8 +1,12 @@
 {
   "main": {
     "tag": "div",
-    "class": "bugs-overview"
+    "class": "bugtracker-container" 
   },
+  "overview-table": {
+        "tag": "div",
+        "class": "bugs-overview"
+    },
   "header": {
     "tag": "div",
     "class": "header",
@@ -30,7 +34,7 @@
             {
                 "tag"   : "i",
                 "id"    : "status-mark",
-                "class" : "fa fa-sort-down"
+                "class" : "fa"
             }
         ]
       },

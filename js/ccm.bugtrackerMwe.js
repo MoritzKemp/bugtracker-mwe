@@ -127,9 +127,11 @@ ccm.component(
                  * @private
                  */
                 var buildOverview = function (bugs) {
+                    //Get container template
+                    var container = $(ccm.helper.html(self.html.get('main')));
 
-                    // Get container from html template
-                    var overview = $(ccm.helper.html(self.html.get('main')));
+                    // Get overview template
+                    var overview = $(ccm.helper.html(self.html.get('overview-table')));
 
                     // Attach header
                     var header = $(ccm.helper.html(
@@ -143,6 +145,17 @@ ccm.component(
                             descriptionTitle: "Description"
                         }
                     ));
+            
+                    //Ascending or descending symbol in State-Column
+                    var stateHeader = header.find('#status-mark');
+                    if (bugSorting === 0) {
+                        stateHeader.removeClass('fa-sort-up');
+                        stateHeader.addClass('fa-sort-down');
+                    } else {
+                        stateHeader.removeClass('fa-sort-down');
+                        stateHeader.addClass('fa-sort-up');
+                    }
+                    
                     header.appendTo(overview);
 
                     //Sort bugs
@@ -167,12 +180,14 @@ ccm.component(
                         i++;
                     }
                     
+                    overview.appendTo(container)
+                    
                     //Attach  button to add new bugs
                     var newBugButton = $(ccm.helper.html(self.html.get('new-bug-btn')));
-                    newBugButton.appendTo(overview);
+                    newBugButton.appendTo(container);
                     
                     //Render constructed overview
-                    element.html(overview);
+                    element.html(container);
                 };
                 
 
@@ -311,7 +326,7 @@ ccm.component(
                     $('.bug-buttons > .fa-remove').click(this, onClickRemoveBug);
                 });
                 
-                
+                if(callback) callback();
             };
 
             /**
@@ -321,7 +336,7 @@ ccm.component(
              */
             self.storeBug = function(bug){
                 self.remoteStore.set(bug, function(response){
-                    console.log(response)
+                    console.log(response);
                 });
             };
 
@@ -354,64 +369,13 @@ ccm.component(
                 
                 var reverseOrder = function(a,b) {return (compareBugs(a,b)*-1)}
                 
-                if (bugSorting === 0) {
-                    $('#status-mark').removeClass('fa-sort-up');
-                    $('#status-mark').addClass('fa-sort-down');
+                if (bugSorting === 0) {                  
                     bugs.sort(compareBugs);
                 } else {
-                    $('#status-mark').removeClass('fa-sort-down');
-                    $('#status-mark').addClass('fa-sort-up');
                     bugs.sort(reverseOrder);
                 }
             };
             
-            /*
-             * For development purpose, resets remote database
-             */
-            var resetDatabase = function () {
-
-                // Delete content
-                self.remoteStore.get(function (response) {
-                    response.forEach(function (elm) {
-                        self.remoteStore.del(elm.key, function (resp) {
-                        });
-                    });
-                });
-
-                // set test content
-//                self.remoteStore.set(
-//                    {
-//                        "bugId": "3442",
-//                        "context": "my specific url",
-//                        "subscriber": "Moritz",
-//                        "description": "my bug description",
-//                        "name": "Bug No. 1",
-//                        "state": "pending"
-//                    }
-//                );
-//
-//                self.remoteStore.set(
-//                    {
-//                        "bugId": "6552",
-//                        "context": "my specific url 2",
-//                        "description": "my bug description 2, somewhat a little bit longer.",
-//                        "subscriber": "Fred",
-//                        "name": "Bug No. 2",
-//                        "state": "pending"
-//                    }
-//                );
-//
-//                self.remoteStore.set(
-//                    {
-//                        "bugId": "2252",
-//                        "context": "my specific url 2",
-//                        "description": "my bug description 2, somewhat a little bit longer.",
-//                        "subscriber": "Nasenbär",
-//                        "name": "Bug No. 22",
-//                        "state": "closed"
-//                    }
-//                );
-            };
     }
 });
 

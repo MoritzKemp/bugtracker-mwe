@@ -2,29 +2,9 @@ describe("Bugtracker ccm-component", function(){
     var bugtracker_local;
     describe("when ccm-framework is ready", function(){
         beforeEach(function(done){
-            ccm.instance('../js/ccm.bugtrackerMwe.js', {
-                html: [ccm.store, {local: '../js/templates.json'}],
-                style       : [ccm.load, '../css/bug.css'],
-                element     : $('#component-wrapper'),
-                inputComponent: [
-                    ccm.instance, 
-                    'https://akless.github.io/ccm-components/resources/input/ccm.input.js',
-                    {
-                        data: {
-                            store: [ccm.store, '../js/input.json'],
-                            key: 'bugInput'
-                        },
-                        fieldset: 'Add bug',
-                        onFinish: function(bug){
-                            var index = (new Date()).getTime();
-                            bug.bugId = index;
-                            bug.key = index;
-
-                            var event = $.Event('newBug', {'bug': bug});
-                            $('.input-comp-area').trigger(event);
-                        }
-                    }
-                ]
+            ccm.instance('../js/ccm.bugtrackerMwe.js', 
+            {
+                element     : $('#component-wrapper')
             },
             function(bugtrackerInstance){
                 bugtracker_local = bugtrackerInstance;
@@ -92,7 +72,7 @@ describe("Bugtracker ccm-component", function(){
                 bugtracker_local.removeBug(bugs[0]);
                 expect(bugtracker_local.remoteStore.del).toHaveBeenCalledWith(
                         bugs[0].key, 
-                        jasmine.any(Function)
+                        jasmine.any(Function) // any callback, we dont care
                     );
             });
             
