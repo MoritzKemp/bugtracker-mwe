@@ -1,22 +1,13 @@
-.ccm-bugtrackerMwe .bugs-overview {
+.ccm-bugtrackerMwe .bugs-overview table{
     min-width: 600px;
     border: 2px solid #36f0fe;
     padding: 0.5em;
-    display: table;
     background-color: white;
-
 }
 
-.ccm-bugtrackerMwe .bug,
-.ccm-bugtrackerMwe .header{
-    display: table-row;
-    width: 100%;
-}
-
-.ccm-bugtrackerMwe .bug > *,
-.ccm-bugtrackerMwe .header > *{
+.ccm-bugtrackerMwe .bugs-overview, thead
+.ccm-bugtrackerMwe .bugs-overview, td{
     font-family: sans-serif;
-    display: table-cell;
     padding: 0.2em 1em 0.2em 1em;
     vertical-align: top;
 }

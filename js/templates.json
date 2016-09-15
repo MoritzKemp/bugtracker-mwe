@@ -1,7 +1,7 @@
 {
   "main": {
     "tag": "div",
-    "class": "bugtracker-container" 
+    "class": "bugtracker-container"
   },
   "overview-table": {
         "tag": "div",

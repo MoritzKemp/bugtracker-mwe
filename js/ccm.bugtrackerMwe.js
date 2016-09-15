@@ -72,11 +72,7 @@ ccm.component(
              */
             var self = this;
 
-            /**
-             * State variable to indicate current bug sorting order
-             * @private
-             */
-            var bugSorting = 0;
+            
             
             /**
              * Initialize the component instance. <i>ccm</i> does call this 
@@ -91,26 +87,92 @@ ccm.component(
                 * the bugtracker-instance construction, custom config
                 * can be applied out of the bugtracker's config. 
                 */
-                ccm.instance(
-                    'https://akless.github.io/ccm-components/resources/input/ccm.input.js',
-                    {
-                        data: self.inputData,
-                        fieldset: 'Add bug',
-                        onFinish: function(bug){
-                            var index = (new Date()).getTime();
-                            bug.bugId = index;
-                            bug.key = index;
-
-                            var event = $.Event('newBug', {'bug': bug});
-                            $('.input-comp-area').trigger(event);
-                        }               
-                    },
-                    function(instance){
-                        self.inputComponent = instance;
-                    }
-                );
+                
         
+                // Load knockout.js for mvvm pattern
+                //ccm.load('https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js');
+                
                 if(callback) callback();
+            };
+
+            var Bug =  function(bug){
+                this.key            = bug.key;
+                this.bugId          = ko.observable(bug.bugId);
+                this.name           = ko.observable(bug.name);
+                this.subscriber     = ko.observable(bug.subscriber);
+                this.color          = ko.observable(bug.color);
+                this.description    = ko.observable(bug.description);
+                this.state          = ko.observable(bug.state);
+                this.priority       = ko.observable(bug.priority);
+                this.edit           = ko.observable(false);
+            };
+            
+            var BugOverviewViewModel = function(){
+                that = this;
+                that.bugs           = ko.observableArray([]);
+                that.currentView    = ko.observable(0);
+                that.bugSorting     = ko.observable(1);
+                
+                that.editBug = function(bug){
+                    bug.edit(true);
+                };
+                
+                that.approveChange = function(bug){
+                    bug.edit(false);
+                    self.storeBug(ko.toJS(bug));
+                };
+                
+                that.editToggle = function(bug){
+                    if(!bug.edit()) that.editBug(bug);
+                    else if(bug.edit()) that.approveChange(bug);
+                };
+                
+                that.removeBug = function(bug){
+                    that.bugs.remove(bug);
+                    self.removeBug(ko.toJS(bug));
+                };
+                
+                that.submitNewBugHandler = function(data, event){
+                    self.storeBug(event.bug);
+                    that.bugs.push(new Bug(event.bug));
+                    that.currentView(0);
+                }
+                
+                that.sortBugs = function(){
+                    
+                    switch(that.bugSorting()) {
+                        case -1: 
+                            that.bugs.sort(function(a, b){
+                                if(a.state() === "open" || b.state() === "closed") return -1;
+                                else if(a.state === b.state) return 0;
+                                else return 1;
+                            });
+                            break;
+                        
+                        case 1:
+                            that.bugs.sort(function(a, b){
+                                if(a.state() === "open" || b.state() === "closed") return 1;
+                                else if(a.state() === b.state()) return 0;
+                                else return -1;
+                            });
+                            break;
+                    }
+                    that.bugSorting(that.bugSorting()*-1);
+                };
+                
+                that.renderInputView = function(){
+                    that.currentView(1);
+                };
+                
+                that.renderOverview = function(){
+                    that.currentView(0);
+                };
+                
+                self.remoteStore.get(function(response){
+                    var mappedBugs = $.map(response, function(elem){return new Bug(elem) });
+                    that.bugs(mappedBugs);
+                });
+                
             };
 
             /**
@@ -121,210 +183,31 @@ ccm.component(
                 
                 // Get own website area
                 var element = ccm.helper.element(self);
-                /**
-                 * Builds the overview and attaches given bugs
-                 * @param bugs array of bugs to display
-                 * @private
-                 */
-                var buildOverview = function (bugs) {
-                    //Get container template
-                    var container = $(ccm.helper.html(self.html.get('main')));
-
-                    // Get overview template
-                    var overview = $(ccm.helper.html(self.html.get('overview-table')));
-
-                    // Attach header
-                    var header = $(ccm.helper.html(
-                        self.html.get('header'),
-                        {
-                            bugIdTitle: "ID",
-                            priorityTitle: "Priority",
-                            nameTitle: "Title",
-                            statusTitle: "State",
-                            subscriberTitle: "Subscriber",
-                            descriptionTitle: "Description"
-                        }
-                    ));
-            
-                    //Ascending or descending symbol in State-Column
-                    var stateHeader = header.find('#status-mark');
-                    if (bugSorting === 0) {
-                        stateHeader.removeClass('fa-sort-up');
-                        stateHeader.addClass('fa-sort-down');
-                    } else {
-                        stateHeader.removeClass('fa-sort-down');
-                        stateHeader.addClass('fa-sort-up');
-                    }
-                    
-                    header.appendTo(overview);
-
-                    //Sort bugs
-                    sortStatus(bugs);
-
-                    //Render all bugs
-                    var i = 0;
-                    while (bugs[i]) {
-                        // Create html and wrap in to a jQery object
-                        var newBug = $(ccm.helper.html(
-                            self.html.get('bug'),
-                            {
-                                bugId: bugs[i].bugId,
-                                priority: bugs[i].priority,
-                                subscriber: bugs[i].subscriber,
-                                description: bugs[i].description,
-                                status: bugs[i].state,
-                                name: bugs[i].name
-                            }
-                        ));
-                        newBug.appendTo(overview);
-                        i++;
-                    }
-                    
-                    overview.appendTo(container)
-                    
-                    //Attach  button to add new bugs
-                    var newBugButton = $(ccm.helper.html(self.html.get('new-bug-btn')));
-                    newBugButton.appendTo(container);
-                    
-                    //Render constructed overview
-                    element.html(container);
-                };
                 
+                var container = $(ccm.helper.html(self.html.get('main')));
+                element.html(container);
+                
+                ccm.render(
+                    'https://akless.github.io/ccm-components/resources/input/ccm.input.js',
+                    {
+                        element : ccm.helper.find(self, '.input-comp-area'),
+                        data: self.inputData,
+                        fieldset: 'Add bug',
+                        onFinish: function(bug){
+                            var index = (new Date()).getTime();
+                            bug.bugId = index;
+                            bug.key = index;
 
-                /**
-                 * Action handler when user clicks on status header
-                 * @private
-                 */
-                var onClickStatusHeader = function () {
-                    if (bugSorting === 0) {   
-                        bugSorting = 1;
-                    } else {
-                        bugSorting = 0;
+                            var event = $.Event('newBug', {'bug': bug});
+                            ccm.helper.find(self, '.input-comp-area').trigger(event);
+                        }               
+                    },
+                    function(instance){
+                        self.inputComponent = instance;
                     }
-                    self.render();
-                };
-
-                /**
-                 * @summary Action handler when user clicks on icon to remove a bug
-                 * @private
-                 */
-                var onClickRemoveBug = function () {
-
-                    // Search for bug id
-                    var bugId = $(this).parents('.bug').children('.bug-id').html();
-                    // Search bug by id and delete
-                    self.remoteStore.get(function (bugs) {
-                        bugs.forEach(function (elem) {
-
-                            if (
-                                elem.bugId === bugId ||
-                                elem.bugId.toString() === bugId
-                            ) {
-                                self.removeBug(elem);
-                            }
-                        });
-                        self.render();
-                    });
-
-                };
-
-                /**
-                 * Action handler when user clicks on icon to edit a bug
-                 * @private
-                 */
-                var onClickEditBug = function () {
-
-                    // Search for bug id
-                    var bugRow = $(this).parents('.bug');
-                    var bugId = bugRow.children('.bug-id').html();
-
-                    var bug = {};
-
-                    self.remoteStore.get(function (bugs) {
-                        bugs.forEach(function (elem) {
-                            if (
-                                elem.bugId === bugId ||
-                                elem.bugId.toString() === bugId
-                            ) {
-                                bug = elem;
-                            }
-                        });
-                        //Create editable row from template
-                        var editableRow = $(ccm.helper.html(
-                            self.html.get('bug-edit'),
-                            {
-                                bugId: bug.bugId,
-                                priority: bug.priority,
-                                subscriber: bug.subscriber,
-                                description: bug.description,
-                                name: bug.name
-                            }
-                        ));
-
-                        //Attach actions
-                        editableRow.find('.fa-check').click(function () {
-                            bug.state = editableRow.find('#states').val();
-                            bug.description = editableRow.find('#description-text').val();
-                            self.remoteStore.set(bug, function () {
-                                self.render();
-                            });
-                        });
-
-                        editableRow.find('.fa-trash').click(function () {
-                            self.render();
-                        });
-
-                        //Replace row
-                        bugRow.replaceWith(editableRow);
-                    });
-                };
+                );
                 
-                /**
-                 * Action handler when user clicks on button to add a new bug.
-                 * Creates the input view by rendering the inpu-component
-                 * inside a div component container. Also etablishes a 
-                 * event communication from the input-component to the
-                 * bugtracker-component. 
-                 * @private
-                 */
-                var onClickAddBug = function(){
-                 
-                    //Render input container
-                    element.html(
-                        $(ccm.helper.html(
-                            self.html.get('bug-input-container'))
-                        )
-                    );
-
-                    //Set back-btn handler
-                    ccm.helper.find(self, '#input-back-btn').click(function(){
-                        self.render();
-                    });
-
-                    self.inputComponent.element = $('.input-comp-area');
-
-                    //Render input component
-                    self.inputComponent.render();
-  
-                    //Set event handler. Input-components can trigger
-                    //a specific event which is recognised by the bugtracker-component.
-                    element.on('newBug', function(e){
-                        self.storeBug(e.bug);
-                        self.render();
-                    })
-                };
-                
-                // Actually build overview
-                self.remoteStore.get(function (response) {
-                    buildOverview(response);
-                    //buildBugInputView();
-                    
-                    //Assign action handlers after rendering
-                    $('.new-bug-btn').click(this, onClickAddBug);
-                    $('.current-status-header').click(this, onClickStatusHeader);
-                    $('.bug-buttons > .fa-edit').click(this, onClickEditBug);
-                    $('.bug-buttons > .fa-remove').click(this, onClickRemoveBug);
-                });
+                ko.applyBindings(new BugOverviewViewModel());
                 
                 if(callback) callback();
             };
@@ -335,9 +218,22 @@ ccm.component(
              * @public
              */
             self.storeBug = function(bug){
-                self.remoteStore.set(bug, function(response){
-                    console.log(response);
-                });
+                
+                //create safe bug object
+                var tempBug = {
+                    key         : bug.key,
+                    bugId       : bug.bugId,
+                    name        : bug.name,
+                    priority    : bug.priority,
+                    subscriber  : bug.subscriber,
+                    state       : bug.state,
+                    desciption  : bug.description,
+                    color       : bug.color
+                };
+                console.log(tempBug);
+//                self.remoteStore.set(tempBug, function(response){
+//                    console.log(response);
+//                });
             };
 
             /**

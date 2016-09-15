@@ -3,12 +3,13 @@
 <script src="http://akless.github.io/ccm-developer/libs/ccm.min.js"></script>
 <!-- Use custom config for local developing tests -->
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
 <body>
 <div id="component-wrapper">
 
     <script>
         ccm.render('js/ccm.bugtrackerMwe.js', {
-            html        : [ccm.store, {local: 'js/templates.json'}],
+            html        : [ccm.store, {local: 'js/overviewTemplate.json'}],
             style       : [ccm.load, 'css/bug.css'],
             element     : $('#component-wrapper'),
             inputData   :  {

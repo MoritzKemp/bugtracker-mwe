@@ -1,0 +1,116 @@
+{
+  "main": {
+    "tag": "div",
+    "class": "bugtracker-container",
+    "inner": [{
+        "tag": "div",
+        "class": "bugs-overview",
+        "data-bind": "visible: currentView() == 0",
+        "inner": [{
+            "tag": "table",
+            "inner": [{
+                "tag": "thead",
+                "inner":{
+                    "tag": "tr",
+                    "inner": [{
+                        "tag": "th",
+                        "inner": "ID"
+                    },{
+                        "tag": "th",
+                        "inner": "Priority"
+                    },{
+                        "tag": "th",
+                        "inner": "Name"
+                    },{
+                        "tag": "th",
+                        "class": "current-status-header",
+                        "data-bind": "click: sortBugs",
+                        "inner": [
+                            "State",
+                            {
+                                "tag"       : "i",
+                                "id"        : "status-mark",
+                                "class"     : "fa",
+                                "data-bind" : "css: {'fa-sort-up': bugSorting() === -1, 'fa-sort-down': bugSorting() === 1}"
+                            }
+                        ]
+                    },{
+                        "tag": "th",
+                        "inner": "Subscriber"
+                    },{
+                        "tag": "th",
+                        "inner": "Description"
+                    }]
+                }
+            },{
+                "tag": "tbody",
+                "data-bind": "foreach: bugs",
+                "inner": {
+                    "tag": "tr",
+                    "inner": [{
+                        "tag": "td",
+                        "data-bind": "text: bugId"
+                    },{
+                        "tag": "td",
+                        "data-bind": "text: priority"
+                    },{
+                        "tag": "td",
+                        "data-bind": "text: name"
+                    },{
+                        "tag": "td",
+                        "data-bind": "text: state"
+                    },{
+                        "tag": "td",
+                        "data-bind": "text: subscriber"
+                    },{
+                        "tag": "td",
+                        "inner": {
+                            "tag": "textarea",
+                            "type": "text",
+                            "data-bind": "textInput: description, enable: edit"
+                        }
+                    },{
+                        "tag": "td",
+                        "class": "bug-buttons",
+                        "inner": [
+                          {
+                            "tag": "i",
+                            "class": "fa",
+                            "data-bind": "click: $parent.editToggle, css: {'fa-edit': !edit(), 'fa-check': edit()}"
+                          },
+                          {
+                            "tag": "i",
+                            "class": "fa fa-remove",
+                            "data-bind": "click: $parent.removeBug"
+                          }
+                        ]
+                    }]
+                }
+            }]
+        }]    
+    },{
+      "tag": "button",
+      "class": "new-bug-btn",
+      "data-bind": "visible: currentView() == 0, click: renderInputView",
+      "inner": "Add bug"
+    },{
+      "tag": "div",
+      "class": "bug-input-container",
+      "data-bind": "visible: currentView() == 1",
+      "inner": [
+          {
+              "tag":"button",
+              "id": "input-back-btn",
+              "inner": "Back to overview",
+              "data-bind": "click: renderOverview"
+          },
+          {
+              "tag": "div",
+              "class": "input-comp-area",
+              "data-bind": "event: {newBug: submitNewBugHandler}"
+          }
+        ]
+    }]
+  }
+}
+
