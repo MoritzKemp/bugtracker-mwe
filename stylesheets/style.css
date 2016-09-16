@@ -6,6 +6,10 @@
     all: initial;
 }
 
+#bugtracker th{
+    text-align: center;
+}
+
 footer {
     margin-top: 2em;
 }
