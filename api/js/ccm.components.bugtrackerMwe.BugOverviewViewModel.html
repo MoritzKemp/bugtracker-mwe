@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Class: bugtrackerMwe</title>
+	<title>Documentation Class: BugOverviewViewModel</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -70,13 +70,15 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: bugtrackerMwe</h1>
+	<h1 class="page-title">Class: BugOverviewViewModel</h1>
 <section>
 
 <header>
     
         <h2>
-        bugtrackerMwe
+            <span class="ancestors"><a href="ccm.components.bugtrackerMwe.html">.bugtrackerMwe</a>.</span>
+        
+        BugOverviewViewModel
         </h2>
         
     
@@ -89,12 +91,19 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="bugtrackerMwe"><span class="type-signature"></span>new bugtrackerMwe()</h4>
+    <h4 class="name" id="BugOverviewViewModel"><span class="type-signature"></span>new BugOverviewViewModel()</h4>
     
     
 </dt>
 <dd>
 
+    
+    <div class="description">
+        <p>The ViewModel of the bugtracker.
+Provides several methods and observables 
+a view can use via the data binding technique
+of knockout.js.</p>
+    </div>
     
 
     
@@ -167,13 +176,6 @@
     
 
     
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="ccm.components.bugtrackerMwe.BugOverviewViewModel.html">BugOverviewViewModel</a></dt>
-            <dd></dd>
-        </dl>
-    
 
     
 
@@ -185,230 +187,83 @@
         <dl>
             
 <hr>
-<dt class="name" id=".config">
-    <h4><span class="type-signature">&lt;static> </span>config<span class="type-signature"> :ccm.components.bugtrackerMwe.types.config</span></h4>
+<dt class="name" id=".that.bugs">
+    <h4><span class="type-signature">&lt;static> </span>that.bugs<span class="type-signature"></span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>Default component configuration.</p>
+        <p>All registered bugs</p>
     </div>
     
 
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">ccm.components.bugtrackerMwe.types.config</span>
-
-
-
-            </li>
-        </ul>
     
 
     
 <dl class="details">
     
 
-    <h5 class="subsection-title">Properties:</h5>
+	
 
-    <dl>
+	
 
-<table class="props table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>element</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">ccm.types.element</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>ccm instance website area</p></td>
-        </tr>
+	
 
     
 
-        <tr>
-            
-                <td class="name"><code>html</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">ccm.store</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Basic HTML-Template, knockout.js data bindings can be used</p></td>
-        </tr>
+    
 
     
 
-        <tr>
-            
-                <td class="name"><code>remoteStore</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">ccm.store</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Remote database configuration</p></td>
-        </tr>
-
     
 
-        <tr>
-            
-                <td class="name"><code>style</code></td>
-            
+	
 
-            <td class="type">
-            
-                
-<span class="param-type">ccm.load</span>
+	
 
+	
 
+	
 
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>CSS stylesheet</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>icons</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">ccm.load</span>
+	
 
 
 
-            
-            </td>
+	
 
-            
+	
 
-            
+	
 
-            <td class="description last"><p>Load remote icon fonts from cloudflare</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>inputData</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">ccm.store</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Template for bug input mask, configures the input-ccm-component</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>knockout</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">ccm.load</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Knockout.js framework, necessery to provide the mvvm pattern</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
+	
 </dl>
 
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".that.bugSorting">
+    <h4><span class="type-signature">&lt;static> </span>that.bugSorting<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>States if open bugs are first (1) or closed bugs (-1).
+Therefore defines the sorting of bugs.</p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
     
 
 	
@@ -442,12 +297,127 @@
 	
 
 	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><p><a href="https://akless.github.io/ccm-components/api/input/">input-ccm-component documentation</a></p></li>
-			</ul>
-	</dd>
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".that.bugStates">
+    <h4><span class="type-signature">&lt;static> </span>that.bugStates<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Array fo possible bug state values.</p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".that.currentView">
+    <h4><span class="type-signature">&lt;static> </span>that.currentView<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Current view. Allows hidding of views.
+0 is the bug overview.
+1 is the input mask for new bugs.</p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
 	
 
 	
@@ -467,7 +437,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="init"><span class="type-signature"></span>init(callback)</h4>
+    <h4 class="name" id=".that.approveChange"><span class="type-signature">&lt;static> </span>that.approveChange(bug)</h4>
     
     
 </dt>
@@ -475,9 +445,8 @@
 
     
     <div class="description">
-        <p>Called once before instanciation.
-Privatizes members to 
-avoid manipulation after component instanciation.</p>
+        <p>Updates given bug to the remote store
+and sets bug's edit value to FALSE</p>
     </div>
     
 
@@ -512,13 +481,13 @@ avoid manipulation after component instanciation.</p>
 
         <tr>
             
-                <td class="name"><code>callback</code></td>
+                <td class="name"><code>bug</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type">bug</span>
 
 
 
@@ -597,7 +566,7 @@ avoid manipulation after component instanciation.</p>
             
 <hr>
 <dt>
-    <h4 class="name" id="removeBug"><span class="type-signature"></span>removeBug(bug)</h4>
+    <h4 class="name" id=".that.editBug"><span class="type-signature">&lt;static> </span>that.editBug(bug)</h4>
     
     
 </dt>
@@ -605,7 +574,7 @@ avoid manipulation after component instanciation.</p>
 
     
     <div class="description">
-        <p>Public function to remove given bug in remote database</p>
+        <p>Sets the bugs edit value to true</p>
     </div>
     
 
@@ -646,7 +615,7 @@ avoid manipulation after component instanciation.</p>
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#BugObject">BugObject</a></span>
+<span class="param-type">bug</span>
 
 
 
@@ -657,7 +626,7 @@ avoid manipulation after component instanciation.</p>
 
             
 
-            <td class="description last"><p>Bug to be removed from the bugtracker's database</p></td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -725,7 +694,7 @@ avoid manipulation after component instanciation.</p>
             
 <hr>
 <dt>
-    <h4 class="name" id="render"><span class="type-signature"></span>render()</h4>
+    <h4 class="name" id=".that.editToggle"><span class="type-signature">&lt;static> </span>that.editToggle(bug)</h4>
     
     
 </dt>
@@ -733,8 +702,264 @@ avoid manipulation after component instanciation.</p>
 
     
     <div class="description">
-        <p>Build bug overview, render input component
-and apply view model.</p>
+        <p>Decides on given bug's edit value to 
+call edit(bug) (TRUE) or approveChange(bug) (FALSE).</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>bug</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">bug</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".that.removeBug"><span class="type-signature">&lt;static> </span>that.removeBug(bug)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Removes given bug record.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>bug</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">bug</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".that.renderInputView"><span class="type-signature">&lt;static> </span>that.renderInputView()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Render input view and hide overview of bugs</p>
     </div>
     
 
@@ -804,7 +1029,7 @@ and apply view model.</p>
             
 <hr>
 <dt>
-    <h4 class="name" id="storeBug"><span class="type-signature"></span>storeBug(bug)</h4>
+    <h4 class="name" id=".that.renderOverview"><span class="type-signature">&lt;static> </span>that.renderOverview()</h4>
     
     
 </dt>
@@ -812,7 +1037,164 @@ and apply view model.</p>
 
     
     <div class="description">
-        <p>Public function to save given bug into remote database</p>
+        <p>Render bug overview table and hide input view</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".that.sortBugs"><span class="type-signature">&lt;static> </span>that.sortBugs()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Sorts bugs after their state</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".that.submitNewBugHandler"><span class="type-signature">&lt;static> </span>that.submitNewBugHandler(recordData, eventData)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Event handler, creates a new bug
+record. New bug is given in even data.</p>
     </div>
     
 
@@ -847,13 +1229,13 @@ and apply view model.</p>
 
         <tr>
             
-                <td class="name"><code>bug</code></td>
+                <td class="name"><code>recordData</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#BugObject">BugObject</a></span>
+<span class="param-type">data</span>
 
 
 
@@ -864,7 +1246,31 @@ and apply view model.</p>
 
             
 
-            <td class="description last"><p>Bug to be added to the bugtracker's database</p></td>
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>eventData</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">event</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>contains new bug</p></td>
         </tr>
 
     
