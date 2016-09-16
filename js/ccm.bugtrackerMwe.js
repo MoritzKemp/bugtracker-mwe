@@ -56,7 +56,8 @@ ccm.component(
             inputData: {
                 store: [ccm.store, '../js/input.json'],
                 key: 'bugInput'
-            }
+            },
+            knockout: [ccm.load, 'https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js']
         },
 
         /**
@@ -84,7 +85,7 @@ ccm.component(
              * @param {function} callback
              */
             self.init = function(callback){
-                my = ccm.helper.privatize(self, 'remoteStore');
+                my = ccm.helper.privatize(self, 'remoteStore', 'knockout');
                 if(callback) callback();
             };
 

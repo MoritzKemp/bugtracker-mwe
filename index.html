@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
-<script src="http://akless.github.io/ccm-developer/libs/ccm.min.js"></script>
-<!-- Use custom config for local developing tests -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+<!-- ccm framework -->
+<script src="http://akless.github.io/ccm-developer/libs/ccm.min.js"></script>
+
 <body>
 <div id="component-wrapper">
-
+    
+    <!-- Use custom config for local developing tests -->
     <script>
         ccm.render('js/ccm.bugtrackerMwe.js', {
             html        : [ccm.store, {local: 'js/overviewTemplate.json'}],
