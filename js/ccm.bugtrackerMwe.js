@@ -41,11 +41,12 @@ ccm.component(
          * Default component configuration.
          * @type {ccm.components.bugtrackerMwe.types.config}
          * @property {ccm.types.element} element    - ccm instance website area
-         * @property {ccm.store} html               - Basic HTML-Template
+         * @property {ccm.store} html               - Basic HTML-Template, knockout.js data bindings can be used
          * @property {ccm.store} remoteStore        - Remote database configuration
          * @property {ccm.load} style               - CSS stylesheet
          * @property {ccm.load} icons               - Load remote icon fonts from cloudflare
          * @property {ccm.store} inputData          - Template for bug input mask, configures the input-ccm-component
+         * @property {ccm.load} knockout            - Knockout.js framework, necessery to provide the mvvm pattern
          * @see [input-ccm-component documentation]{@link https://akless.github.io/ccm-components/api/input/}
          */
         config: {
@@ -80,15 +81,22 @@ ccm.component(
 
             /**
              * Called once before instanciation.
-             * Privatizes remote store memeber to 
+             * Privatizes members to 
              * avoid manipulation after component instanciation.
              * @param {function} callback
              */
             self.init = function(callback){
                 my = ccm.helper.privatize(self, 'remoteStore', 'knockout');
+                
                 if(callback) callback();
             };
 
+            /**
+             * Creates a observable bug instance
+             * from a given bug object. 
+             * @param {BugObject} bug
+             * @private
+             */
             var Bug =  function(bug){
                 this.key            = bug.key;
                 this.bugId          = ko.observable(bug.bugId);
@@ -101,38 +109,113 @@ ccm.component(
                 this.edit           = ko.observable(false);
             };
             
+            /**
+             * The ViewModel of the bugtracker.
+             * Provides several methods and observables 
+             * a view can use via the data binding technique
+             * of knockout.js.
+             * @class BugOverviewViewModel
+             * @memberof ccm.components.bugtrackerMwe
+             */
             var BugOverviewViewModel = function(){
-                that = this;
+                var that = this;
+                
+                /**
+                 * All registered bugs
+                 * @memberof! ccm.components.bugtrackerMwe.BugOverviewViewModel
+                 * @public
+                 */
                 that.bugs           = ko.observableArray([]);
+                
+                /**
+                 * Current view. Allows hidding of views.
+                 * 0 is the bug overview.
+                 * 1 is the input mask for new bugs.
+                 * @memberof! ccm.components.bugtrackerMwe.BugOverviewViewModel
+                 * @public
+                 * 
+                 */
                 that.currentView    = ko.observable(0);
+                
+                /**
+                 * States if open bugs are first (1) or closed bugs (-1).
+                 * Therefore defines the sorting of bugs.
+                 * @memberof! ccm.components.bugtrackerMwe.BugOverviewViewModel
+                 * @public
+                 */
                 that.bugSorting     = ko.observable(1);
+                
+                /**
+                 * Array fo possible bug state values.
+                 * @memberof! ccm.components.bugtrackerMwe.BugOverviewViewModel
+                 * @public
+                 */
                 that.bugStates      = ko.observableArray(['open', 'pending', 'closed']);
                 
+                /**
+                 * Sets the bugs edit value to true
+                 * @param {bug} bug
+                 * @memberof! ccm.components.bugtrackerMwe.BugOverviewViewModel
+                 * @public
+                 */
                 that.editBug = function(bug){
                     bug.edit(true);
                 };
                 
+                /**
+                 * Updates given bug to the remote store
+                 * and sets bug's edit value to FALSE
+                 * @param {bug} bug
+                 * @memberof! ccm.components.bugtrackerMwe.BugOverviewViewModel
+                 * @public
+                 */
                 that.approveChange = function(bug){
                     bug.edit(false);
                     self.storeBug(ko.toJS(bug));
                 };
                 
+                /**
+                 * Decides on given bug's edit value to 
+                 * call edit(bug) (TRUE) or approveChange(bug) (FALSE).
+                 * @param {bug} bug
+                 * @memberof! ccm.components.bugtrackerMwe.BugOverviewViewModel
+                 * @public
+                 */
                 that.editToggle = function(bug){
                     if(!bug.edit()) that.editBug(bug);
                     else if(bug.edit()) that.approveChange(bug);
                 };
                 
+                /**
+                 * Removes given bug record.
+                 * @param {bug} bug
+                 * @memberof! ccm.components.bugtrackerMwe.BugOverviewViewModel
+                 * @public
+                 */
                 that.removeBug = function(bug){
                     that.bugs.remove(bug);
                     self.removeBug(ko.toJS(bug));
                 };
                 
+                /**
+                 * Event handler, creates a new bug
+                 * record. New bug is given in even data.
+                 * @param {data} recordData
+                 * @param {event} eventData contains new bug
+                 * @memberof! ccm.components.bugtrackerMwe.BugOverviewViewModel
+                 * @public
+                */
                 that.submitNewBugHandler = function(data, event){
                     self.storeBug(event.bug);
                     that.bugs.push(new Bug(event.bug));
                     that.currentView(0);
                 }
                 
+                /**
+                 * Sorts bugs after their state
+                 * @memberof! ccm.components.bugtrackerMwe.BugOverviewViewModel
+                 * @public
+                 */
                 that.sortBugs = function(){
                     
                     switch(that.bugSorting()) {
@@ -155,24 +238,35 @@ ccm.component(
                     that.bugSorting(that.bugSorting()*-1);
                 };
                 
+                /**
+                 * Render input view and hide overview of bugs
+                 * @memberof! ccm.components.bugtrackerMwe.BugOverviewViewModel
+                 * @public
+                 */
                 that.renderInputView = function(){
                     self.inputComponent.render();
                     that.currentView(1);
                 };
                 
+                /**
+                 * Render bug overview table and hide input view
+                 * @memberof! ccm.components.bugtrackerMwe.BugOverviewViewModel
+                 * @public
+                 */
                 that.renderOverview = function(){
                     that.currentView(0);
                 };
                 
+                //Get initial data from remote store
                 my.remoteStore.get(function(response){
                     var mappedBugs = $.map(response, function(elem){return new Bug(elem) });
                     that.bugs(mappedBugs);
                 });
-                
             };
 
             /**
-             * Render bugtracker overview and set action handlers
+             * Build bug overview, render input component
+             * and apply view model.
              * @public
              */
             self.render = function (callback) {
@@ -268,10 +362,10 @@ ccm.component(
  * {
  *  "bugId"         : "33de",
  *  "priority"      : "low",
- *  "context"       : "my specific url",
  *  "subscriber"    : "John Doe",
  *  "description"   : "My bug description",
  *  "name"          : "Short bug description",
- *  "state"         : "pending"
+ *  "state"         : "pending",
+ *  "color"         : "green"
  * }
  */
