@@ -1,10 +1,19 @@
 describe("Bugtracker ccm-component", function(){
+    
     var bugtracker_local;
+    
+    //Remote store mockup
+    var remoteStore = {
+        get: function(){},
+        set: function(){},
+        del: function(){}
+    }
     describe("when ccm-framework is ready", function(){
         beforeEach(function(done){
             ccm.instance('../js/ccm.bugtrackerMwe.js', 
             {
-                element     : $('#component-wrapper')
+                element     : $('#component-wrapper'),
+                remoteStore : remoteStore
             },
             function(bugtrackerInstance){
                 bugtracker_local = bugtrackerInstance;
@@ -25,44 +34,44 @@ describe("Bugtracker ccm-component", function(){
                     "key"           : "11",
                     "bugId"         : "1",
                     "priority"      : "low",
-                    "context"       : "my specific url",
                     "subscriber"    : "John Doe",
                     "description"   : "my bug description",
                     "name"          : "Bug No. 1",
-                    "state"         : "open"
+                    "state"         : "open",
+                    "color"         : ""
                 },
                 {
                     "key"           : "12",
                     "bugId"         : "2",
                     "priority"      : "high",
-                    "context"       : "my specific url 2",
                     "description"   : "my bug description 2, somewhat a little bit longer.",
                     "subscriber"    : "Fred",
                     "name"          : "Bug No. 2",
-                    "state"         : "pending"
+                    "state"         : "pending",
+                    "color"         : ""
                 },
                 {
                     "key"           : "13",
                     "bugId"         : "3",
                     "priority"      : "low",
-                    "context"       : "my specific url 3",
                     "description"   : "my bug description 3, somewhat a little bit longer.",
                     "subscriber"    : "Nasenbär",
                     "name"          : "Bug No. 22",
-                    "state"         : "closed"
+                    "state"         : "closed",
+                    "color"         : ""
                 }
             ];    
             
             beforeEach(function(){
                 //Setup remote database stub
-                spyOn(bugtracker_local.remoteStore, "set");
-                spyOn(bugtracker_local.remoteStore, "del");
-                spyOn(bugtracker_local.remoteStore, "get");
+                spyOn(remoteStore, "set");
+                spyOn(remoteStore, "del");
+                spyOn(remoteStore, "get");
             });
             
             it("should be able to add a new bug", function(){
                 bugtracker_local.storeBug(bugs[0]);
-                expect(bugtracker_local.remoteStore.set).toHaveBeenCalledWith(
+                expect(remoteStore.set).toHaveBeenCalledWith(
                         bugs[0], 
                         jasmine.any(Function) // any callback, we dont care
                     );
@@ -70,7 +79,7 @@ describe("Bugtracker ccm-component", function(){
             
             it("should be able to remove a valid bug", function(){
                 bugtracker_local.removeBug(bugs[0]);
-                expect(bugtracker_local.remoteStore.del).toHaveBeenCalledWith(
+                expect(remoteStore.del).toHaveBeenCalledWith(
                         bugs[0].key, 
                         jasmine.any(Function) // any callback, we dont care
                     );
@@ -80,14 +89,14 @@ describe("Bugtracker ccm-component", function(){
                 var bugWithNoKey = {
                     "bugId"         : "3",
                     "priority"      : "low",
-                    "context"       : "my specific url 3",
                     "description"   : "my bug description 3, somewhat a little bit longer.",
                     "subscriber"    : "Nasenbär",
                     "name"          : "Bug No. 22",
-                    "state"         : "closed"
+                    "state"         : "closed",
+                    "color"         : ""
                 }
                 bugtracker_local.removeBug(bugWithNoKey);
-                expect(bugtracker_local.remoteStore.del).not.toHaveBeenCalled();
+                expect(remoteStore.del).not.toHaveBeenCalled();
             });
         });
     });

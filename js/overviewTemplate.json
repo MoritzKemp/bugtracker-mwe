@@ -40,6 +40,8 @@
                     },{
                         "tag": "th",
                         "inner": "Description"
+                    },{
+                        "tag": "th"
                     }]
                 }
             },{
@@ -58,7 +60,10 @@
                         "data-bind": "text: name"
                     },{
                         "tag": "td",
-                        "data-bind": "text: state"
+                        "inner": {
+                            "tag": "select",
+                            "data-bind": "options: $root.bugStates, enable: edit, value: state"
+                        }
                     },{
                         "tag": "td",
                         "data-bind": "text: subscriber"

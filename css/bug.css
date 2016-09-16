@@ -1,13 +1,16 @@
 .ccm-bugtrackerMwe .bugs-overview table{
     min-width: 600px;
     border: 2px solid #36f0fe;
-    padding: 0.5em;
     background-color: white;
+    border-collapse: collapse;
+    font-family: sans-serif;
 }
 
-.ccm-bugtrackerMwe .bugs-overview, thead
-.ccm-bugtrackerMwe .bugs-overview, td{
-    font-family: sans-serif;
+.ccm-bugtrackerMwe .bugs-overview thead th{
+    padding: 0.3em 0 0.2em 0;
+}
+
+.ccm-bugtrackerMwe .bugs-overview td{
     padding: 0.2em 1em 0.2em 1em;
     vertical-align: top;
 }
@@ -17,36 +20,8 @@
     cursor: pointer;
 }
 
-.ccm-bugtrackerMwe .header{
-    text-align: center;
-    color: #016f67;
-}
-
-.ccm-bugtrackerMwe .bug:nth-child(even){
+.ccm-bugtrackerMwe .bugs-overview tr:nth-child(even){
     background-color: #d5fcfe;
-}
-
-.ccm-bugtrackerMwe .bug-id{
-    width: 2em;
-    border-right: 1px solid grey;
-}
-
-.ccm-bugtrackerMwe .priority {
-    border-right: 1px solid grey;
-}
-
-.ccm-bugtrackerMwe .name {
-    border-right: 1px solid grey;
-}
-
-.ccm-bugtrackerMwe .current-status {
-    width: 3em;
-    border-right: 1px solid grey;
-}
-
-.ccm-bugtrackerMwe .subscriber,
-.ccm-bugtrackerMwe .description{
-    border-right: 1px solid grey;
 }
 
 .ccm-bugtrackerMwe .fa-remove,

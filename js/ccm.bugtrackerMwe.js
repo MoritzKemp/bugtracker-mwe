@@ -4,10 +4,9 @@
  * This bugtracker is a component for the ccm-framework by Andre Kless.<br>
  * Landing page for ccm-developers [here]{@link https://akless.github.io/ccm-developer/}. <br>
  * API documentation of the ccm-framework [here]{@link https://akless.github.io/ccm-developer/api/ccm/index.html}. <br>
- * @author Johann Martens <johann.martens@smail.inf.h-brs.de>
  * @author Moritz Kemp <moritz.kemp@smail.inf.h-brs.de>
  * @license MIT License
- * Copyright (c) 2016 Johann Martens, Moritz Kemp
+ * Copyright (c) 2016 Moritz Kemp
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy of 
  * this software and associated documentation files (the "Software"), to deal in 
@@ -50,8 +49,8 @@ ccm.component(
          * @see [input-ccm-component documentation]{@link https://akless.github.io/ccm-components/api/input/}
          */
         config: {
-            html: [ccm.store, {local: '../js/templates.json'}],
-            remoteStore: [ccm.store, {store: 'bugtracker', url: 'http://ccm2.inf.h-brs.de/index.js'}],
+            html: [ccm.store, {local: '../js/overviewTemplate.json'}],
+            remoteStore: [ccm.store, {store: 'bugtracker2', url: 'http://ccm2.inf.h-brs.de/index.js'}],
             style:  [ccm.load, '../css/bug.css'],
             icons:  [ccm.load, 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'],
             inputData: {
@@ -71,27 +70,21 @@ ccm.component(
              * @alias ccm.components.bugtrackerMwe#
              */
             var self = this;
-
-            
             
             /**
-             * Initialize the component instance. <i>ccm</i> does call this 
-             * function after instance creation.
-             * In this context its used to solve the imput-component
-             * dependency.
-             * @param {type} callback
+             * Private members
+             * @private
+             */
+            var my;
+
+            /**
+             * Called once before instanciation.
+             * Privatizes remote store memeber to 
+             * avoid manipulation after component instanciation.
+             * @param {function} callback
              */
             self.init = function(callback){
-                
-                /* By solving the input-component dependency after
-                * the bugtracker-instance construction, custom config
-                * can be applied out of the bugtracker's config. 
-                */
-                
-        
-                // Load knockout.js for mvvm pattern
-                //ccm.load('https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js');
-                
+                my = ccm.helper.privatize(self, 'remoteStore');
                 if(callback) callback();
             };
 
@@ -112,6 +105,7 @@ ccm.component(
                 that.bugs           = ko.observableArray([]);
                 that.currentView    = ko.observable(0);
                 that.bugSorting     = ko.observable(1);
+                that.bugStates      = ko.observableArray(['open', 'pending', 'closed']);
                 
                 that.editBug = function(bug){
                     bug.edit(true);
@@ -161,6 +155,7 @@ ccm.component(
                 };
                 
                 that.renderInputView = function(){
+                    self.inputComponent.render();
                     that.currentView(1);
                 };
                 
@@ -168,7 +163,7 @@ ccm.component(
                     that.currentView(0);
                 };
                 
-                self.remoteStore.get(function(response){
+                my.remoteStore.get(function(response){
                     var mappedBugs = $.map(response, function(elem){return new Bug(elem) });
                     that.bugs(mappedBugs);
                 });
@@ -187,7 +182,7 @@ ccm.component(
                 var container = $(ccm.helper.html(self.html.get('main')));
                 element.html(container);
                 
-                ccm.render(
+                ccm.instance(
                     'https://akless.github.io/ccm-components/resources/input/ccm.input.js',
                     {
                         element : ccm.helper.find(self, '.input-comp-area'),
@@ -227,13 +222,18 @@ ccm.component(
                     priority    : bug.priority,
                     subscriber  : bug.subscriber,
                     state       : bug.state,
-                    desciption  : bug.description,
+                    description : bug.description,
                     color       : bug.color
                 };
-                console.log(tempBug);
-//                self.remoteStore.set(tempBug, function(response){
-//                    console.log(response);
-//                });
+                
+                //Prevent injection of scripts
+                $.each(tempBug, function(index, value){
+                    tempBug[index] = ccm.helper.noScript(value);
+                });
+                
+                my.remoteStore.set(tempBug, function(response){
+                    console.log(response);
+                });
             };
 
             /**
@@ -245,33 +245,11 @@ ccm.component(
                 if (!bug.key) {
                     console.log('Bug not persisted yet. Skip delete request.');
                 }
-                else self.remoteStore.del(bug.key, function () {
+                else my.remoteStore.del(bug.key, function () {
                     console.log('Delete bug with key ' + bug.key);
                 });
             };
-
-            /**
-             * Private function to sort given bugs after their status
-             * @param bugs array of bugs to sort
-             * @private
-             */
-            var sortStatus = function (bugs) {
-
-                var compareBugs = function(a, b){
-                    if(a.state === "open" || b.state === "closed") return -1;
-                    else if(a.state === b.state) return 0;
-                    else return 1;
-                }
-                
-                var reverseOrder = function(a,b) {return (compareBugs(a,b)*-1)}
-                
-                if (bugSorting === 0) {                  
-                    bugs.sort(compareBugs);
-                } else {
-                    bugs.sort(reverseOrder);
-                }
-            };
-            
+ 
     }
 });
 
