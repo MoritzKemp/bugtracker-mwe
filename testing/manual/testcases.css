@@ -1,0 +1,11 @@
+table {
+    width: 40em;
+    border: 1px solid black;
+}
+td {
+    border: 0.5px solid black;
+}
+
+.scenario {
+    margin-bottom: 5em;
+}

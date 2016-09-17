@@ -87,7 +87,25 @@ ccm.component(
              */
             self.init = function(callback){
                 my = ccm.helper.privatize(self, 'remoteStore', 'knockout');
-                
+                ccm.instance(
+                    'https://akless.github.io/ccm-components/resources/input/ccm.input.js',
+                    {
+                        element : ccm.helper.find(self, '.input-comp-area'),
+                        data: self.inputData,
+                        fieldset: 'Add bug',
+                        onFinish: function(bug){
+                            var index = (new Date()).getTime();
+                            bug.bugId = index;
+                            bug.key = index;
+
+                            var event = $.Event('newBug', {'bug': bug});
+                            ccm.helper.find(self, '.input-comp-area').trigger(event);
+                        }               
+                    },
+                    function(instance){
+                        self.inputComponent = instance;
+                    }
+                );
                 if(callback) callback();
             };
 
@@ -276,27 +294,6 @@ ccm.component(
                 
                 var container = $(ccm.helper.html(self.html.get('main')));
                 element.html(container);
-                
-                ccm.instance(
-                    'https://akless.github.io/ccm-components/resources/input/ccm.input.js',
-                    {
-                        element : ccm.helper.find(self, '.input-comp-area'),
-                        data: self.inputData,
-                        fieldset: 'Add bug',
-                        onFinish: function(bug){
-                            var index = (new Date()).getTime();
-                            bug.bugId = index;
-                            bug.key = index;
-
-                            var event = $.Event('newBug', {'bug': bug});
-                            ccm.helper.find(self, '.input-comp-area').trigger(event);
-                        }               
-                    },
-                    function(instance){
-                        self.inputComponent = instance;
-                    }
-                );
-                
                 ko.applyBindings(new BugOverviewViewModel());
                 
                 if(callback) callback();
